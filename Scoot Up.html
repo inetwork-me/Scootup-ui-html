@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scoot Up — Growth Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  @theme {
+    --color-paper: var(--c-paper);
+    --color-surface: var(--c-surface);
+    --color-ink: var(--c-ink);
+    --color-muted: var(--c-muted);
+    --color-brand: var(--c-brand);
+    --color-onbrand: var(--c-onbrand);
+    --color-line: var(--c-line);
+    --font-display: "Bricolage Grotesque", ui-sans-serif, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+</style>
+<style>
+  /* ---------- THEME TOKENS ---------- */
+  :root, [data-theme="light"] {
+    --c-paper:#f1ede3; --c-surface:#fbf9f2; --c-ink:#15231e; --c-muted:#5a6961;
+    --c-brand:#1f5a4c; --c-onbrand:#f1ede3; --c-line:rgba(31,90,76,.14);
+    --c-accent:#cf6f44; --c-onaccent:#fbf7f0;
+  }
+  [data-theme="dark"] {
+    --c-paper:#0c1611; --c-surface:#11201a; --c-ink:#edf2ec; --c-muted:#8fa097;
+    --c-brand:#57b39a; --c-onbrand:#0c1611; --c-line:rgba(255,255,255,.10);
+    --c-accent:#e08a5d; --c-onaccent:#160d07;
+  }
+  [data-theme="forest"] {
+    --c-paper:#1f5a4c; --c-surface:#1b5044; --c-ink:#f1ede3; --c-muted:#bdd4cb;
+    --c-brand:#f0e6d4; --c-onbrand:#1f5a4c; --c-line:rgba(255,255,255,.18);
+    --c-accent:#df8154; --c-onaccent:#fbf7f0;
+  }
+  html { scroll-behavior:auto; }
+  body {
+    background:var(--c-paper); color:var(--c-ink);
+    font-family:"Bricolage Grotesque",sans-serif;
+    -webkit-font-smoothing:antialiased; overflow-x:clip;
+    transition:background .5s ease, color .5s ease;
+  }
+  ::selection { background:var(--c-brand); color:var(--c-onbrand); }
+
+  /* inline icon */
+  .ico{ width:1em; height:1em; display:inline-block; vertical-align:-.1em; flex:0 0 auto; }
+
+  /* grain + soft vignette */
+  .grain::before{
+    content:""; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  /* ---------- TEXT REVEAL ---------- */
+  .rv-line{ display:block; }
+  .rv-w{ display:inline-block; overflow:hidden; vertical-align:top; padding-bottom:.12em; margin-bottom:-.12em; padding-right:.05em; }
+  .rv-wi{ display:inline-block; transform:translateY(112%); transition:transform .85s cubic-bezier(.19,1,.22,1); }
+  .is-in .rv-wi, [data-reveal='words'].is-in .rv-wi{ transform:translateY(0); }
+
+  [data-reveal='up']{ opacity:0; transform:translateY(34px); transition:opacity .9s ease, transform .9s cubic-bezier(.19,1,.22,1); }
+  [data-reveal='up'].is-in{ opacity:1; transform:none; }
+  [data-reveal='fade']{ opacity:0; transition:opacity 1s ease; }
+  [data-reveal='fade'].is-in{ opacity:1; }
+  [data-reveal='clip']{ clip-path:inset(0 100% 0 0); transition:clip-path 1s cubic-bezier(.7,0,.2,1); }
+  [data-reveal='clip'].is-in{ clip-path:inset(0 0 0 0); }
+  [style*="--d"]{ transition-delay:var(--d); }
+
+  /* hero rotating word */
+  .rot-host{ display:inline-block; overflow:hidden; vertical-align:top; color:var(--c-accent); }
+  .rot-stack{ display:flex; flex-direction:column; }
+  .rot-word{ display:block; line-height:0.92; white-space:nowrap; }
+
+  /* custom hover cursor — circular badge with rotating rim text */
+  .cursor-cta{ position:fixed; top:0; left:0; z-index:999; pointer-events:none; }
+  .cursor-cta-in{
+    position:relative; width:122px; height:122px; border-radius:50%;
+    display:grid; place-items:center;
+    background:var(--c-brand); color:var(--c-onbrand);
+    box-shadow:0 18px 38px -12px color-mix(in srgb, var(--c-brand) 60%, #000);
+    opacity:0; transform:translate(-50%,-50%) scale(0);
+    transition:transform .45s cubic-bezier(.34,1.45,.4,1), opacity .2s ease;
+  }
+  .cursor-cta.on .cursor-cta-in{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+  .cur-ring{ position:absolute; inset:5px; width:calc(100% - 10px); height:calc(100% - 10px); }
+  .cur-ring text{ font-family:"JetBrains Mono",monospace; font-size:10.5px; font-weight:500; fill:currentColor; }
+  @media (prefers-reduced-motion: no-preference){ .cur-ring{ animation:spin-slow 12s linear infinite; } }
+  .cur-arrow{ width:30px; height:30px; }
+  .rot-cta{ cursor:none; }
+
+  /* ---------- NAV ---------- */
+  [data-nav]{ transition:padding .4s ease; }
+  .theme-dot{ width:13px; height:13px; border-radius:99px; border:1.5px solid var(--c-line); transition:transform .25s, box-shadow .25s; }
+  .theme-dot[aria-pressed="true"]{ box-shadow:0 0 0 2px var(--c-paper),0 0 0 3.5px var(--c-brand); transform:scale(1.05); }
+  [data-magnetic]{ transition:transform .35s cubic-bezier(.19,1,.22,1), background .3s, color .3s; will-change:transform; }
+
+  /* ---------- HERO logo float ---------- */
+  @keyframes float { 0%,100%{ transform:translateY(0) rotate(0deg);} 50%{ transform:translateY(-16px) rotate(6deg);} }
+  .hero-mark{ animation:float 7s ease-in-out infinite; }
+  @keyframes spin-slow { to { transform:rotate(360deg);} }
+  .ring-spin{ animation:spin-slow 26s linear infinite; }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{ display:flex; width:max-content; animation:marq var(--dur,38s) linear infinite; }
+  .marquee.rev{ animation-direction:reverse; }
+  @keyframes marq { to { transform:translateX(-50%);} }
+  .marquee-mask{ -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent); }
+  .partner-chip{ display:inline-flex; align-items:center; white-space:nowrap; border:1.5px solid var(--c-line); border-radius:99px; padding:.72rem 1.6rem; font-family:"Bricolage Grotesque",sans-serif; font-weight:600; font-size:clamp(1.05rem,2vw,1.4rem); letter-spacing:-.01em; color:var(--c-ink); transition:background .35s ease, color .35s ease, border-color .35s ease; }
+  .partner-chip:hover{ background:var(--c-brand); color:var(--c-onbrand); border-color:transparent; }
+
+  /* ---------- media card (used by About) ---------- */
+  .reel-media{ position:relative; overflow:hidden; border-radius:28px; aspect-ratio:4/5; background:var(--c-surface); border:1px solid var(--c-line); }
+  .reel-media img{ width:100%; height:100%; object-fit:cover; }
+  .reel-fallback{ position:absolute; inset:0; display:grid; place-items:center; background:linear-gradient(135deg,var(--c-brand),color-mix(in srgb,var(--c-brand) 55%, #000)); color:var(--c-onbrand); font-family:"JetBrains Mono",monospace; font-size:.7rem; letter-spacing:.1em; }
+
+  /* ---------- SHOWCASE CAROUSEL ---------- */
+  .car-stage{ position:relative; height:min(72vh,660px); min-height:420px; overflow:hidden; }
+  .car-card{
+    position:absolute; top:50%; left:50%; margin:0;
+    width:min(46vw,560px); height:100%;
+    border-radius:26px; overflow:hidden; background:var(--c-surface);
+    transform:translate(-50%,-50%);
+    will-change:transform; cursor:pointer;
+  }
+  .car-card.is-front{ cursor:none; }
+  .car-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .car-card::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:36%; background:linear-gradient(to top, rgba(0,0,0,.5), transparent); pointer-events:none; }
+  .car-cap{
+    position:absolute; left:1.25rem; right:1.25rem; bottom:1.1rem; z-index:2;
+    display:flex; align-items:center; gap:.55rem;
+    color:#fff; font-weight:600; font-size:clamp(.88rem,1.3vw,1.05rem); letter-spacing:-.01em;
+    white-space:nowrap; overflow:hidden;
+  }
+  .car-dot{ width:7px; height:7px; border-radius:99px; background:#fff; flex:0 0 auto; }
+  @media (max-width:1023px){
+    .car-card{ width:min(76vw,560px); }
+    .car-stage{ height:min(60vh,540px); min-height:380px; }
+  }
+
+  /* ---------- SERVICES BENTO ---------- */
+  .bento-card{
+    position:relative; display:flex; flex-direction:column;
+    background:var(--c-surface); border:1px solid var(--c-line); border-radius:28px;
+    overflow:hidden;
+    transition:transform .55s cubic-bezier(.19,1,.22,1), box-shadow .55s ease;
+  }
+  .bento-card:hover{ transform:translateY(-6px); box-shadow:0 34px 60px -34px rgba(0,0,0,.28); }
+  .bento-head{ padding:1.9rem 1.9rem 1.5rem; }
+  .bento-title{ font-family:"Bricolage Grotesque",sans-serif; font-weight:700; letter-spacing:-.02em; font-size:clamp(1.35rem,2.2vw,1.7rem); line-height:1.1; }
+  .bento-desc{ color:var(--c-muted); font-size:.93rem; line-height:1.65; margin-top:.65rem; max-width:32rem; text-wrap:pretty; }
+  .bento-num{ font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--c-muted); }
+  .bento-media{ margin-top:auto; padding:0 1.3rem 1.3rem; }
+  .bento-media--top{ margin-top:0; padding:1.3rem 1.3rem 0; }
+  .bento-img{ position:relative; border-radius:18px; overflow:hidden; border:1px solid var(--c-line); background:var(--c-paper); }
+  .bento-img img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .9s cubic-bezier(.19,1,.22,1), filter .6s; }
+  .bento-card:hover .bento-img img{ transform:scale(1.045); filter:saturate(1.08); }
+  .bento-tag{ display:inline-flex; align-items:center; background:var(--c-accent); color:var(--c-onaccent); font-family:"JetBrains Mono",monospace; font-size:.6rem; text-transform:uppercase; letter-spacing:.14em; padding:.32rem .6rem; border-radius:7px; }
+
+  /* reels thumb strip */
+  .reel-strip{ display:flex; align-items:center; gap:.7rem; }
+  .reel-strip .rs{ flex:1; aspect-ratio:3/4; border-radius:14px; overflow:hidden; }
+  .reel-strip .rs img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s cubic-bezier(.19,1,.22,1); }
+  .reel-strip .rs--mid{ flex:1.3; border:1.5px solid var(--c-ink); padding:5px; background:var(--c-surface); border-radius:18px; }
+  .reel-strip .rs--mid img{ border-radius:12px; }
+  .bento-card:hover .reel-strip img{ transform:scale(1.06); }
+
+  /* roas mini panel */
+  .roas-panel{ background:var(--c-ink); color:var(--c-paper); border-radius:18px; padding:1.15rem 1.3rem 1.3rem; font-family:"JetBrains Mono",monospace; font-size:.76rem; }
+  .roas-panel .rp-cap{ opacity:.55; font-size:.64rem; text-transform:uppercase; letter-spacing:.16em; }
+  .roas-row{ display:flex; align-items:baseline; gap:.8rem; margin-top:.8rem; }
+  .roas-row .rl{ flex:0 0 auto; }
+  .roas-row .rd{ flex:1; border-bottom:1px dashed color-mix(in srgb, var(--c-paper) 28%, transparent); transform:translateY(-3px); }
+  .roas-row .rv{ color:var(--c-accent); }
+
+  /* tilted chip field */
+  .chip-field{ position:relative; overflow:hidden; border-radius:18px; border:1px solid var(--c-line); background:var(--c-paper); height:200px; }
+  .chip-grid{ position:absolute; inset:-34% -18%; display:flex; flex-wrap:wrap; gap:.55rem; align-content:center; justify-content:center; transform:rotate(-8deg); transition:transform .8s cubic-bezier(.19,1,.22,1); }
+  .bento-card:hover .chip-grid{ transform:rotate(-8deg) translateY(-10px); }
+  .chip{ border:1px solid var(--c-line); background:var(--c-surface); border-radius:99px; padding:.5rem 1.05rem; font-family:"JetBrains Mono",monospace; font-size:.66rem; text-transform:uppercase; letter-spacing:.13em; color:var(--c-muted); white-space:nowrap; }
+  .chip--hot{ background:var(--c-brand); color:var(--c-onbrand); border-color:transparent; }
+
+  /* footer big word */
+  .bigword{ font-weight:700; line-height:.82; letter-spacing:-.03em; font-size:clamp(4.5rem,21vw,20rem); }
+  .link-u{ position:relative; }
+  .link-u::after{ content:""; position:absolute; left:0; bottom:-2px; height:1.5px; width:100%; background:currentColor; transform:scaleX(0); transform-origin:right; transition:transform .45s cubic-bezier(.19,1,.22,1); }
+  .link-u:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+  /* ---------- HERO STAT STRIP ---------- */
+  .stat-strip{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat{ padding:.35rem 1.6rem .15rem; border-left:1px solid var(--c-line); }
+  .stat:first-child{ border-left:0; padding-left:0; }
+  .stat-num{ display:flex; align-items:baseline; gap:.04em; font-weight:800; letter-spacing:-.03em; line-height:1; font-size:clamp(2.1rem,3.6vw,3.4rem); font-variant-numeric:tabular-nums; }
+  .stat-num .sfx{ color:var(--c-accent); }
+  .stat-star{ width:.62em; height:.62em; align-self:center; }
+  .stat-label{ font-family:"JetBrains Mono",monospace; font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--c-muted); margin-top:.6rem; }
+  @media (max-width:767px){
+    .stat-strip{ grid-template-columns:repeat(2,1fr); row-gap:1.5rem; }
+    .stat{ padding:.2rem 1rem 0; }
+    .stat:nth-child(odd){ border-left:0; padding-left:0; }
+  }
+
+  /* hero eyebrow — cut-paper accent tag with drifting sloped edges */
+  .hero-tag{
+    display:inline-flex; align-items:center;
+    padding:.66rem 1.3rem .7rem;
+    background:var(--c-accent); color:var(--c-onaccent);
+    font-family:"JetBrains Mono",monospace; line-height:1;
+    font-size:clamp(.66rem,1.3vw,.74rem); text-transform:uppercase; letter-spacing:.18em;
+    transform:rotate(-0.6deg);
+    clip-path:polygon(0% 26%, 48% 7%, 100% 0%, 100% 74%, 52% 95%, 0% 100%);
+    filter:drop-shadow(0 9px 18px color-mix(in srgb, var(--c-accent) 38%, transparent));
+  }
+
+  /* hero entrance choreography: bg wipes in → text rises out of it */
+  [data-reveal='tag'] .hero-tag{ transform:rotate(-0.6deg) scaleX(0); transform-origin:left center; transition:transform .65s cubic-bezier(.76,0,.24,1) .15s; }
+  [data-reveal='tag'].is-in .hero-tag{ transform:rotate(-0.6deg) scaleX(1); }
+  [data-reveal='tag'] .hero-tag-text{ display:inline-block; transform:translateY(150%); transition:transform .65s cubic-bezier(.19,1,.22,1) .7s; }
+  [data-reveal='tag'].is-in .hero-tag-text{ transform:translateY(0); }
+
+  /* hero eyebrow — status pill + drawing divider */
+  .hero-eyebrow .hero-pill{ display:inline-flex; align-items:center; gap:.55rem; padding:.42rem .9rem; border:1px solid var(--c-line); border-radius:99px; color:var(--c-ink); background:color-mix(in srgb, var(--c-brand) 9%, transparent); }
+  .hero-dot{ position:relative; width:7px; height:7px; border-radius:99px; background:var(--c-brand); flex:0 0 auto; }
+  .hero-dot::after{ content:""; position:absolute; inset:0; border-radius:99px; background:var(--c-brand); }
+  @media (prefers-reduced-motion: no-preference){ .hero-dot::after{ animation:dotpulse 2.2s ease-out infinite; } }
+  @keyframes dotpulse{ 0%{ transform:scale(1); opacity:.55; } 80%,100%{ transform:scale(3.4); opacity:0; } }
+  .hero-eyebrow-line{ height:1px; width:0; background:var(--c-line); flex:0 0 auto; transition:width .8s cubic-bezier(.19,1,.22,1) .25s; }
+  .hero-eyebrow.is-in .hero-eyebrow-line{ width:44px; }
+
+  /* ---------- PILL NAVBAR ---------- */
+  .nav-bar{ background:color-mix(in srgb, var(--c-paper) 70%, transparent); -webkit-backdrop-filter:blur(16px) saturate(1.3); backdrop-filter:blur(16px) saturate(1.3); border:1px solid var(--c-line); transition:box-shadow .4s ease, background .4s ease; }
+  [data-nav].nav-solid .nav-bar{ box-shadow:0 14px 40px -18px rgba(0,0,0,.28); background:color-mix(in srgb, var(--c-paper) 86%, transparent); }
+  .nav-pill{ border-radius:99px; padding:.5rem 1rem; font-weight:600; font-size:.92rem; color:var(--c-muted); transition:background .3s, color .3s; }
+  .nav-pill:hover{ background:color-mix(in srgb, var(--c-brand) 12%, transparent); color:var(--c-brand); }
+  .menu-icon-btn{ position:relative; display:inline-grid; place-items:center; width:40px; height:40px; border-radius:99px; border:1px solid var(--c-line); color:var(--c-ink); transition:background .3s, color .3s, border-color .3s; }
+  .menu-icon-btn:hover, .menu-icon-btn[aria-expanded="true"]{ background:var(--c-brand); color:var(--c-onbrand); border-color:transparent; }
+  .menu-icon-btn .mb-ico{ position:relative; width:16px; height:11px; }
+  .menu-icon-btn .mb-ico span{ position:absolute; left:0; right:0; height:2px; background:currentColor; border-radius:2px; transition:transform .35s cubic-bezier(.7,0,.2,1), opacity .25s; }
+  .menu-icon-btn .mb-ico span:nth-child(1){ top:0; }
+  .menu-icon-btn .mb-ico span:nth-child(2){ top:50%; transform:translateY(-50%); }
+  .menu-icon-btn .mb-ico span:nth-child(3){ bottom:0; }
+  .menu-icon-btn[aria-expanded="true"] .mb-ico span:nth-child(1){ top:50%; transform:translateY(-50%) rotate(45deg); }
+  .menu-icon-btn[aria-expanded="true"] .mb-ico span:nth-child(2){ opacity:0; }
+  .menu-icon-btn[aria-expanded="true"] .mb-ico span:nth-child(3){ bottom:50%; transform:translateY(50%) rotate(-45deg); }
+  .cta-pill{ display:inline-flex; align-items:center; gap:.4rem; border-radius:99px; background:var(--c-brand); color:var(--c-onbrand); font-weight:700; font-size:.92rem; padding:.5rem 1rem; transition:opacity .3s; }
+  .cta-pill:hover{ opacity:.9; }
+
+  /* ---------- EXPANDABLE MENU (dropdown under burger) ---------- */
+  .su-menu{ position:absolute; z-index:60; top:calc(100% + 10px); right:0; width:min(340px,86vw); transform:translateY(-12px) scale(.95); transform-origin:top right; opacity:0; pointer-events:none; transition:opacity .3s ease, transform .5s cubic-bezier(.34,1.4,.5,1); }
+  .su-menu.open{ opacity:1; pointer-events:auto; transform:translateY(0) scale(1); }
+  .su-menu-inner{ background:var(--c-brand); border-radius:32px; padding:1.1rem 1rem 1.2rem; box-shadow:0 44px 90px -28px color-mix(in srgb, var(--c-brand) 55%, #000); }
+  .su-menu-list{ position:relative; }
+  .su-menu-pill{ position:absolute; left:.5rem; right:.5rem; top:0; height:0; background:var(--c-onbrand); border-radius:99px; transition:transform .5s cubic-bezier(.34,1.35,.4,1), height .35s ease; z-index:0; }
+  .menu-link{ position:relative; z-index:1; display:block; text-align:center; font-family:"Bricolage Grotesque",sans-serif; font-weight:800; letter-spacing:-.02em; font-size:clamp(1.55rem,5.5vw,1.95rem); line-height:1; padding:.62rem 1rem; color:var(--c-onbrand); transition:color .35s ease; }
+  .menu-link.on{ color:var(--c-brand); }
+  .su-menu-cta{ display:block; text-align:center; margin-top:.9rem; padding:.85rem 1rem; border-radius:99px; background:var(--c-onbrand); color:var(--c-brand); font-weight:700; font-size:1rem; transition:opacity .3s; }
+  .su-menu-cta:hover{ opacity:.88; }
+  .su-menu-foot{ display:flex; align-items:center; justify-content:center; gap:.85rem; margin-top:1rem; padding-top:1rem; border-top:1px solid color-mix(in srgb, var(--c-onbrand) 24%, transparent); }
+  .su-menu-foot .fl{ font-family:"JetBrains Mono",monospace; font-size:.66rem; text-transform:uppercase; letter-spacing:.18em; color:color-mix(in srgb, var(--c-onbrand) 70%, transparent); }
+  .su-menu-foot .theme-dot{ border-color:color-mix(in srgb, var(--c-onbrand) 40%, transparent); }
+  .su-menu-foot .theme-dot[aria-pressed="true"]{ box-shadow:0 0 0 2px var(--c-brand), 0 0 0 3.5px var(--c-onbrand); }
+
+  /* small-screen headline sizing */
+  @media (max-width:640px){
+    #top h1{ font-size:clamp(2rem,9.6vw,3.2rem); }
+  }
+
+  /* ---------- PUSH-UP CTA BUTTONS ---------- */
+  /* the button keeps its box; the label slides up while an identical copy pushes in from below */
+  .flip-3d{
+    position:relative;
+    display:inline-flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .flip-3d .flip-face{
+    display:inline-flex; align-items:center; justify-content:center; gap:.45rem;
+    white-space:nowrap;
+    transition:transform .55s cubic-bezier(.76,0,.24,1);
+    will-change:transform;
+  }
+  .flip-3d .flip-face--a{ transform:translateY(0); }
+  .flip-3d .flip-face--b{ position:absolute; inset:0; transform:translateY(110%); }
+  .flip-btn:hover .flip-3d .flip-face--a,
+  .flip-btn:focus-visible .flip-3d .flip-face--a{ transform:translateY(-110%); }
+  .flip-btn:hover .flip-3d .flip-face--b,
+  .flip-btn:focus-visible .flip-3d .flip-face--b{ transform:translateY(0); }
+  /* keep the magnetic transform on the button and the slide on the label — no conflict */
+</style>
+</head>
+<body class="grain">
+
+<!-- icon sprite (iconsax-style linear icons) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-arrow-tr" viewBox="0 0 24 24"><path d="M7 17 17 7M8.6 7H17v8.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M17 3.5H7A3.5 3.5 0 0 0 3.5 7v6.5A3.5 3.5 0 0 0 7 17h1.2v2.7c0 .58.66.9 1.12.55L13.5 17H17a3.5 3.5 0 0 0 3.5-3.5V7A3.5 3.5 0 0 0 17 3.5Z M8 8.7h8 M8 11.9h4.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.4l2.47 5.06 5.58.74-4.08 3.88 1.03 5.52L12 15.95 7 18.6l1.03-5.52-4.08-3.88 5.58-.74L12 3.4Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+</defs></svg>
+
+<!-- ============ NAV ============ -->
+<header data-nav class="fixed top-0 inset-x-0 z-50 px-5 md:px-10 pt-3 sm:pt-4 pb-3 sm:pb-4">
+  <div class="mx-auto max-w-[1600px] flex items-start justify-between gap-3">
+    <!-- left: logo, its own floating element -->
+    <a href="#top" class="nav-bar flex items-center gap-2.5 h-14 px-4 sm:px-5 rounded-full shrink-0">
+      <img src="assets/logo.png" alt="Scoot Up" class="w-8 h-8" />
+      <span class="font-display font-extrabold text-lg tracking-tight">Scoot&nbsp;Up</span>
+    </a>
+    <!-- right: nav tabs + CTA + burger, its own floating element -->
+    <div class="nav-right relative shrink-0">
+      <div class="nav-bar flex items-center gap-1 sm:gap-1.5 h-14 pl-2 sm:pl-3 pr-2 rounded-full">
+        <a href="#work" class="nav-pill hidden sm:inline-flex" data-flip>Reels</a>
+        <a href="#services" class="nav-pill hidden sm:inline-flex" data-flip>Services</a>
+        <a href="#contact" class="cta-pill" data-flip>
+          Hi!
+          <svg class="ico" aria-hidden="true"><use href="#i-message"></use></svg>
+        </a>
+        <button data-menu-toggle class="menu-icon-btn" aria-label="Open menu" aria-expanded="false" aria-controls="su-menu">
+          <span class="mb-ico" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+      <!-- dropdown menu, anchored under the burger -->
+      <div data-menu id="su-menu" class="su-menu">
+        <div class="su-menu-inner">
+          <div class="su-menu-list">
+            <span class="su-menu-pill" aria-hidden="true"></span>
+            <a href="#top" class="menu-link on" data-flip>Home</a>
+            <a href="#work" class="menu-link" data-flip>Work</a>
+            <a href="#services" class="menu-link" data-flip>Services</a>
+            <a href="#about" class="menu-link" data-flip>About</a>
+            <a href="#partners" class="menu-link" data-flip>Clients</a>
+            <a href="#contact" class="menu-link" data-flip>Contact</a>
+          </div>
+          <div class="su-menu-foot">
+            <span class="fl">Theme</span>
+            <div class="flex items-center gap-2" role="group" aria-label="Theme">
+              <button data-theme-dot="light" class="theme-dot" style="background:#f1ede3" aria-label="Light theme"></button>
+              <button data-theme-dot="dark" class="theme-dot" style="background:#0c1611" aria-label="Dark theme"></button>
+              <button data-theme-dot="forest" class="theme-dot" style="background:#1f5a4c" aria-label="Forest theme"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative min-h-[100svh] flex flex-col justify-between pt-28 md:pt-32 pb-8 px-5 md:px-10 overflow-hidden">
+  <div class="relative z-10 mx-auto max-w-[1600px] w-full grow flex flex-col justify-center">
+    <div data-reveal="tag" class="mb-6 md:mb-9">
+      <span class="hero-tag"><span class="hero-tag-text">Full-service growth studio — Est. 2019</span></span>
+    </div>
+    <h1 data-reveal="words" data-reveal-delay="0.85" data-rotator-host data-rotator-seed="brands" data-rotator-words="brands|reels|websites|results|stories" class="font-display font-extrabold tracking-[-0.035em] leading-[0.92] text-[clamp(3rem,11.5vw,12rem)]">
+      We scoot brands<br>up &amp; to the right.
+    </h1>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-[1600px] w-full flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-10">
+    <p data-reveal="up" style="--d:1.1s" class="max-w-md text-base md:text-lg text-muted leading-relaxed">
+      Marketing, design &amp; development for teams that refuse to plateau. We blend strategy, story and
+      sharp execution to move the numbers that matter.
+    </p>
+    <div data-reveal="up" style="--d:1.2s" class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 w-full lg:w-auto">
+      <a href="#contact" data-magnetic data-flip class="inline-flex items-center justify-center gap-2 rounded-full bg-brand text-onbrand font-semibold px-7 py-4 text-base hover:opacity-90">
+        Start a project
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+      </a>
+      <a href="#work" data-flip class="inline-flex items-center justify-center gap-2 rounded-full border border-line font-semibold px-7 py-4 text-base hover:border-ink transition-colors">
+        See our work
+      </a>
+    </div>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-[1600px] w-full mt-10 pt-7 border-t border-line">
+    <div class="stat-strip">
+      <div class="stat" data-reveal="up" style="--d:1.25s">
+        <div class="stat-num font-display"><span class="sfx">+</span><span data-count="182">182</span><span class="sfx">%</span></div>
+        <div class="stat-label">avg. pipeline lift</div>
+      </div>
+      <div class="stat" data-reveal="up" style="--d:1.32s">
+        <div class="stat-num font-display"><span data-count="90">90</span><span class="sfx">+</span></div>
+        <div class="stat-label">brands scooted</div>
+      </div>
+      <div class="stat" data-reveal="up" style="--d:1.39s">
+        <div class="stat-num font-display"><span data-count="5">5</span></div>
+        <div class="stat-label">disciplines, one team</div>
+      </div>
+      <div class="stat" data-reveal="up" style="--d:1.46s">
+        <div class="stat-num font-display"><span data-count="4.9" data-dec="1">4.9</span><svg class="ico sfx stat-star" aria-hidden="true"><use href="#i-star"></use></svg></div>
+        <div class="stat-label">client rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERS ============ -->
+<section id="partners" class="py-14 md:py-20 border-y border-line overflow-hidden">
+  <p data-reveal="fade" class="text-center font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-muted mb-10 px-5">
+    Trusted by ambitious teams worldwide
+  </p>
+  <div class="marquee-mask">
+    <div class="marquee" style="--dur:44s">
+      <div class="flex items-center gap-3 md:gap-4 pr-3 md:pr-4" data-partner-row></div>
+      <div class="flex items-center gap-3 md:gap-4 pr-3 md:pr-4" data-partner-row></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOWCASE OF WORK (carousel) ============ -->
+<section id="work" class="pt-24 md:pt-36">
+  <div class="mx-auto max-w-[1600px] px-5 md:px-10 mb-10 md:mb-14">
+    <p data-reveal="up" class="text-center font-mono text-xs uppercase tracking-[0.18em] text-muted mb-5">[ Selected work ]</p>
+    <h2 data-reveal="words" class="text-center font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.4rem,6.5vw,5.5rem)]">
+      Proof, not promises.
+    </h2>
+  </div>
+
+  <div class="car-stage" data-carousel data-reveal="fade">
+    <figure class="car-card" data-car-slide>
+      <img alt="Verde Botanicals" loading="lazy" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1000&q=80" />
+      <figcaption class="car-cap"><span class="car-dot"></span>Verde Botanicals — Brand &amp; Web</figcaption>
+    </figure>
+    <figure class="car-card" data-car-slide>
+      <img alt="Pacer Athletics" loading="lazy" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=80" />
+      <figcaption class="car-cap"><span class="car-dot"></span>Pacer Athletics — Performance Reels</figcaption>
+    </figure>
+    <figure class="car-card" data-car-slide>
+      <img alt="Lumen Studio" loading="lazy" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1000&q=80" />
+      <figcaption class="car-cap"><span class="car-dot"></span>Lumen Studio — UI/UX &amp; Web</figcaption>
+    </figure>
+    <figure class="car-card" data-car-slide>
+      <img alt="Saffron Kitchen" loading="lazy" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80" />
+      <figcaption class="car-cap"><span class="car-dot"></span>Saffron Kitchen — Social Reels</figcaption>
+    </figure>
+    <figure class="car-card" data-car-slide>
+      <img alt="Halcyon Travel" loading="lazy" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" />
+      <figcaption class="car-cap"><span class="car-dot"></span>Halcyon Travel — Brand &amp; Media</figcaption>
+    </figure>
+    <figure class="car-card" data-car-slide>
+      <img alt="Onset Finance" loading="lazy" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80" />
+      <figcaption class="car-cap"><span class="car-dot"></span>Onset Finance — Web App</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ SERVICES (bento) ============ -->
+<section id="services" class="py-24 md:py-40 px-5 md:px-10">
+  <div class="mx-auto max-w-[1600px]">
+    <p data-reveal="up" class="text-center font-mono text-xs uppercase tracking-[0.18em] text-muted mb-5">[ What we do ]</p>
+    <h2 data-reveal="words" class="text-center font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.4rem,6.5vw,5.5rem)]">
+      Five ways we move you up.
+    </h2>
+
+    <div class="grid lg:grid-cols-6 gap-4 md:gap-5 mt-12 md:mt-20">
+
+      <!-- 01 · Marketing -->
+      <article class="bento-card lg:col-span-3" data-reveal="up">
+        <div class="bento-head">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="bento-title">Marketing</h3>
+            <span class="bento-num">01</span>
+          </div>
+          <p class="bento-desc">Strategy, paid &amp; organic growth, lifecycle — and the measurement to prove it. We move the numbers that matter, then show you the receipts.</p>
+        </div>
+        <div class="bento-media">
+          <div class="bento-img" style="aspect-ratio:16/8.5;">
+            <img alt="Growth dashboards on a laptop" loading="lazy" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1100&q=80" />
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 · Web dev -->
+      <article class="bento-card lg:col-span-3" data-reveal="up" style="--d:.08s">
+        <div class="bento-head">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="bento-title">Web Development &amp; UI/UX</h3>
+            <span class="bento-num">02</span>
+          </div>
+          <p class="bento-desc">Fast, beautiful sites and product interfaces — designed and shipped by the same in-house team, week by week.</p>
+        </div>
+        <div class="bento-media">
+          <div class="bento-img" style="aspect-ratio:16/8.5;">
+            <img alt="Interface design in progress" loading="lazy" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1100&q=80" />
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 · Reels -->
+      <article class="bento-card lg:col-span-2" data-reveal="up">
+        <div class="bento-media bento-media--top">
+          <div class="reel-strip">
+            <div class="rs"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=400&q=80" /></div>
+            <div class="rs rs--mid"><img alt="Short-form video frame" loading="lazy" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=500&q=80" /></div>
+            <div class="rs"><img alt="" loading="lazy" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" /></div>
+          </div>
+        </div>
+        <div class="bento-head">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="bento-title">Reels</h3>
+            <span class="bento-num">03</span>
+          </div>
+          <p class="bento-desc">Scroll-stopping short-form video — scripted, shot and edited to convert, not just to trend.</p>
+        </div>
+      </article>
+
+      <!-- 04 · Media buying -->
+      <article class="bento-card lg:col-span-2" data-reveal="up" style="--d:.08s">
+        <div class="bento-head">
+          <div class="flex items-baseline justify-between gap-4">
+            <h3 class="bento-title">Media Buying</h3>
+            <span class="bento-num">04</span>
+          </div>
+          <p class="bento-desc">Performance media across Meta, Google &amp; TikTok — managed to ROAS, not vanity metrics.</p>
+        </div>
+        <div class="bento-media">
+          <div class="roas-panel">
+            <div class="rp-cap">ROAS — last 30 days</div>
+            <div class="roas-row"><span class="rl">META</span><span class="rd"></span><span class="rv">4.2x</span></div>
+            <div class="roas-row"><span class="rl">GOOGLE</span><span class="rd"></span><span class="rv">3.1x</span></div>
+            <div class="roas-row"><span class="rl">TIKTOK</span><span class="rd"></span><span class="rv">5.6x</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 · Designing -->
+      <article class="bento-card lg:col-span-2" data-reveal="up" style="--d:.16s">
+        <div class="bento-media bento-media--top">
+          <div class="chip-field">
+            <div class="chip-grid">
+              <span class="chip">Brand systems</span>
+              <span class="chip">Identity</span>
+              <span class="chip chip--hot">Art direction</span>
+              <span class="chip">Logo</span>
+              <span class="chip">Typography</span>
+              <span class="chip">Packaging</span>
+              <span class="chip">Motion</span>
+              <span class="chip">Guidelines</span>
+              <span class="chip">Social kits</span>
+            </div>
+          </div>
+        </div>
+        <div class="bento-head">
+          <div class="flex items-baseline justify-between gap-4">
+            <div class="flex items-center gap-2.5"><h3 class="bento-title">Designing</h3><span class="bento-tag">In-house</span></div>
+            <span class="bento-num">05</span>
+          </div>
+          <p class="bento-desc">Brand systems, identity and art direction that make you impossible to ignore.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="py-24 md:py-40 px-5 md:px-10 border-t border-line">
+  <div class="mx-auto max-w-[1600px] grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <!-- text -->
+    <div>
+      <p data-reveal="up" class="font-mono text-xs uppercase tracking-[0.18em] text-muted mb-4">[ About us ]</p>
+      <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.03em] leading-[0.98] text-[clamp(2.2rem,4.5vw,3.8rem)]">
+        Big-agency firepower,<br>boutique obsession.
+      </h2>
+      <p data-reveal="up" style="--d:.1s" class="mt-7 text-base md:text-lg text-muted leading-relaxed max-w-xl">
+        Scoot Up is a compact, senior team of marketers, designers and developers. No account-manager
+        telephone game, no junior hand-offs — you work directly with the people building your brand.
+      </p>
+      <div class="mt-10 border-t border-line" data-reveal="up" style="--d:.18s">
+        <div class="py-5 border-b border-line flex items-baseline gap-5">
+          <span class="font-mono text-xs text-muted shrink-0">01</span>
+          <div>
+            <h3 class="font-display font-bold text-lg md:text-xl tracking-tight">Senior-only team</h3>
+            <p class="text-muted text-sm mt-1">You collaborate with the people doing the work — never a middle layer.</p>
+          </div>
+        </div>
+        <div class="py-5 border-b border-line flex items-baseline gap-5">
+          <span class="font-mono text-xs text-muted shrink-0">02</span>
+          <div>
+            <h3 class="font-display font-bold text-lg md:text-xl tracking-tight">Strategy, design &amp; code, in-house</h3>
+            <p class="text-muted text-sm mt-1">One integrated team across every discipline. No silos, no hand-offs.</p>
+          </div>
+        </div>
+        <div class="py-5 border-b border-line flex items-baseline gap-5">
+          <span class="font-mono text-xs text-muted shrink-0">03</span>
+          <div>
+            <h3 class="font-display font-bold text-lg md:text-xl tracking-tight">Obsessed with outcomes</h3>
+            <p class="text-muted text-sm mt-1">We measure success in your numbers, not our deliverables.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- image -->
+    <div data-reveal="up" style="--d:.12s" class="relative">
+      <div class="reel-media" style="aspect-ratio:4/5;">
+        <div class="reel-fallback">SCOOT&nbsp;UP — STUDIO</div>
+        <img alt="The Scoot Up studio" loading="lazy"
+             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
+             onload="this.previousElementSibling.style.display='none'" />
+      </div>
+      <div class="absolute left-4 bottom-4 flex items-center gap-2.5 rounded-full bg-paper text-ink px-4 py-2.5 text-sm font-semibold" style="box-shadow:0 18px 40px -16px rgba(0,0,0,.4)">
+        <span class="w-2 h-2 rounded-full bg-brand"></span> 90+ brands scooted since 2019
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="contact" class="px-5 md:px-10 pb-24 md:pb-32">
+  <div class="mx-auto max-w-[1600px] rounded-[28px] md:rounded-[40px] bg-brand text-onbrand px-7 md:px-20 py-16 md:py-28 relative overflow-hidden" data-reveal="up">
+    <div class="ring-spin absolute -right-24 -top-24 w-80 h-80 rounded-full border border-current opacity-15"></div>
+    <div class="ring-spin absolute -left-32 -bottom-32 w-96 h-96 rounded-full border border-current opacity-10"></div>
+    <div class="relative">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] opacity-70 mb-6">[ Let's build ]</p>
+      <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[0.9] text-[clamp(2.6rem,8.5vw,8rem)]">
+        Ready to<br>scoot up?
+      </h2>
+      <div class="mt-12 flex flex-col sm:flex-row sm:items-center gap-5">
+        <a href="mailto:hello@scootup.studio" data-magnetic data-flip class="inline-flex items-center gap-3 rounded-full bg-onbrand text-brand font-semibold px-8 py-4 text-base md:text-lg hover:opacity-90">
+          hello@scootup.studio <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+        </a>
+        <span class="font-mono text-sm opacity-70">or call +1 (415) 555-0199</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-line pt-16 md:pt-20 overflow-hidden">
+  <div class="mx-auto max-w-[1600px] px-5 md:px-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 pb-16">
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center gap-2.5 mb-4">
+          <img src="assets/logo.png" alt="" class="w-8 h-8" />
+          <span class="font-display font-extrabold text-lg">Scoot&nbsp;Up</span>
+        </div>
+        <p class="text-muted text-sm max-w-[14rem]">A growth studio moving brands up &amp; to the right since 2019.</p>
+      </div>
+      <div>
+        <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Studio</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#work" class="link-u">Work</a></li>
+          <li><a href="#services" class="link-u">Services</a></li>
+          <li><a href="#partners" class="link-u">Clients</a></li>
+          <li><a href="#contact" class="link-u">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Social</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#" class="link-u">Instagram</a></li>
+          <li><a href="#" class="link-u">LinkedIn</a></li>
+          <li><a href="#" class="link-u">Dribbble</a></li>
+          <li><a href="#" class="link-u">Behance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Say hi</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="mailto:hello@scootup.studio" class="link-u">hello@scootup.studio</a></li>
+          <li class="text-muted">San Francisco · Remote</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="relative select-none">
+    <div class="bigword font-display text-center px-4 pb-4" style="color:var(--c-brand)">SCOOT&nbsp;UP</div>
+  </div>
+  <div class="border-t border-line">
+    <div class="mx-auto max-w-[1600px] px-5 md:px-10 py-6 flex flex-col sm:flex-row justify-between gap-3 text-xs font-mono text-muted">
+      <span>© <span data-year>2026</span> Scoot Up Studio. All rights reserved.</span>
+      <span class="inline-flex items-center gap-1.5">Designed to move <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ---- data injection (partners + projects + services) ---- */
+  (function () {
+    const partners = ["NORTHWIND","LUMEN","Pacer","VERDE","Halcyon","ONSET","Meridian","Kindling","VANTAGE","Saffron","Cobalt","Atlas"];
+    document.querySelectorAll("[data-partner-row]").forEach((row) => {
+      partners.forEach((p) => {
+        const s = document.createElement("span");
+        s.className = "partner-chip";
+        s.textContent = p;
+        row.appendChild(s);
+      });
+    });
+  })();
+</script>
+<script src="app.js"></script>
+</body>
+</html>
