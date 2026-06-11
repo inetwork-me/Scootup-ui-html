@@ -300,8 +300,13 @@
   if (menuToggle && menu) {
     const links = Array.from(menu.querySelectorAll(".menu-link"));
     const pill = menu.querySelector(".su-menu-pill");
-    let activeIdx = 0;
+    let activeIdx = links.findIndex((l) => l.hasAttribute("data-active"));
     const placePill = (i) => {
+      if (i < 0) {
+        links.forEach((x) => x.classList.remove("on"));
+        if (pill) pill.style.height = "0";
+        return;
+      }
       const l = links[i];
       if (!l || !pill) return;
       pill.style.height = l.offsetHeight + "px";

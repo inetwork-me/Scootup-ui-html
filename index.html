@@ -329,9 +329,9 @@
     <!-- right: nav tabs + CTA + burger, its own floating element -->
     <div class="nav-right relative shrink-0">
       <div class="nav-bar flex items-center gap-1 sm:gap-1.5 h-14 pl-2 sm:pl-3 pr-2 rounded-full">
-        <a href="#work" class="nav-pill hidden sm:inline-flex" data-flip>Reels</a>
-        <a href="#work" class="nav-pill hidden sm:inline-flex" data-flip>Our Work</a>
-        <a href="#contact" class="cta-pill" data-flip>
+        <a href="reels.html" class="nav-pill hidden sm:inline-flex" data-flip>Reels</a>
+        <a href="work.html"  class="nav-pill hidden sm:inline-flex" data-flip>Our Work</a>
+        <a href="contact.html" class="cta-pill" data-flip>
           Let's Talk
           <svg class="ico" aria-hidden="true"><use href="#i-message"></use></svg>
         </a>
@@ -344,11 +344,10 @@
         <div class="su-menu-inner">
           <div class="su-menu-list">
             <span class="su-menu-pill" aria-hidden="true"></span>
-            <a href="#top" class="menu-link on" data-flip>Home</a>
-            <a href="#services" class="menu-link" data-flip>Services</a>
-            <a href="#about" class="menu-link" data-flip>About</a>
-            <a href="#partners" class="menu-link" data-flip>Clients</a>
-            <a href="#contact" class="menu-link" data-flip>Contact</a>
+            <a href="index.html" class="menu-link" data-flip data-active>Home</a>
+            <a href="reels.html" class="menu-link" data-flip>Reels</a>
+            <a href="work.html"  class="menu-link" data-flip>Our Work</a>
+            <a href="about.html" class="menu-link" data-flip>About</a>
           </div>
           <div class="su-menu-foot">
             <span class="fl">Theme</span>
@@ -368,7 +367,7 @@
 <section id="top" class="relative min-h-[100svh] flex flex-col justify-between pt-28 md:pt-32 pb-8 px-5 md:px-10 overflow-hidden">
   <div class="relative z-10 mx-auto max-w-[1600px] w-full grow flex flex-col justify-center">
     <div data-reveal="tag" class="mb-6 md:mb-9">
-      <span class="hero-tag"><span class="hero-tag-text">Full-service growth studio — Est. 2019</span></span>
+      <span class="hero-tag"><span class="hero-tag-text">Service growth studio</span></span>
     </div>
     <h1 data-reveal="words" data-reveal-delay="0.85" data-rotator-host data-rotator-seed="brands" data-rotator-words="brands|reels|websites|results|stories" class="font-display font-extrabold tracking-[-0.035em] leading-[0.92] text-[clamp(3rem,11.5vw,12rem)]">
       We scoot brands<br>up &amp; to the right.
@@ -381,11 +380,11 @@
       sharp execution to move the numbers that matter.
     </p>
     <div data-reveal="up" style="--d:1.2s" class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 w-full lg:w-auto">
-      <a href="#contact" data-flip class="inline-flex items-center justify-center gap-2 rounded-full bg-brand text-onbrand font-semibold px-7 py-4 text-base hover:opacity-90">
+      <a href="contact.html" data-flip class="inline-flex items-center justify-center gap-2 rounded-full bg-brand text-onbrand font-semibold px-7 py-4 text-base hover:opacity-90">
         Start a project
         <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
       </a>
-      <a href="#work" data-flip class="inline-flex items-center justify-center gap-2 rounded-full border border-line font-semibold px-7 py-4 text-base hover:border-ink transition-colors">
+      <a href="work.html" data-flip class="inline-flex items-center justify-center gap-2 rounded-full border border-line font-semibold px-7 py-4 text-base hover:border-ink transition-colors">
         See our work
       </a>
     </div>
@@ -429,7 +428,7 @@
 <!-- ============ SHOWCASE OF WORK (carousel) ============ -->
 <section id="work" class="pt-24 md:pt-36">
   <div class="mx-auto max-w-[1600px] px-5 md:px-10 mb-10 md:mb-14">
-    <p data-reveal="up" class="text-center font-mono text-xs uppercase tracking-[0.18em] text-muted mb-5">[ Selected work ]</p>
+    <div data-reveal="tag" class="mb-5 flex justify-center"><span class="hero-tag"><span class="hero-tag-text">Selected work</span></span></div>
     <h2 data-reveal="words" class="text-center font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.4rem,6.5vw,5.5rem)]">
       Proof, not promises.
     </h2>
@@ -464,7 +463,7 @@
 </section>
 
 <!-- ============ SERVICES (bento) ============ -->
-<section id="services" class="py-24 md:py-40 px-5 md:px-10 border-t border-line">
+<section id="services" class="py-24 md:py-40 px-5 md:px-10">
 <style>
   /* ── Services accordion ── */
   .svc-tab { border-bottom:1px solid var(--c-line); overflow:hidden; }
@@ -546,7 +545,8 @@
 
   /* services right panel responsive */
   @media(max-width:900px){
-    .svc-col-right{ position:relative !important; height:340px !important; top:auto !important; }
+    .svc-col-right{ position:relative !important; height:auto !important; top:auto !important; }
+    .svc-img-wrap{ flex:none !important; aspect-ratio:4/3; width:100%; }
   }
 
   /* ── entrance animations ── */
@@ -563,7 +563,7 @@
 </style>
 
 <div class="mx-auto max-w-[1600px]">
-  <p data-reveal="up" class="text-center font-mono text-xs uppercase tracking-[0.18em] text-muted mb-5">[ What we do ]</p>
+  <div data-reveal="tag" class="mb-5 flex justify-center"><span class="hero-tag"><span class="hero-tag-text">What we do</span></span></div>
   <h2 data-reveal="words" class="text-center font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.4rem,6.5vw,5.5rem)] mb-16">
     Everything your brand needs, under one roof.
   </h2>
@@ -580,7 +580,7 @@
         </div>
         <div class="svc-tab-body">
           <p class="svc-tab-desc">Scroll-stopping visuals crafted for every platform — feeds, stories, carousels and ads that stop the scroll and drive engagement.</p>
-          <a href="#contact" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="contact.html" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-tab" data-svc="1">
@@ -591,7 +591,7 @@
         </div>
         <div class="svc-tab-body">
           <p class="svc-tab-desc">Brand systems, identity and art direction — print, digital, packaging — that make you impossible to ignore wherever you show up.</p>
-          <a href="#contact" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="contact.html" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-tab" data-svc="2">
@@ -602,7 +602,7 @@
         </div>
         <div class="svc-tab-body">
           <p class="svc-tab-desc">Your brand's compass — logo, voice, positioning and strategy. We build brands that resonate, differentiate and grow with you.</p>
-          <a href="#contact" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="contact.html" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-tab" data-svc="3">
@@ -613,7 +613,7 @@
         </div>
         <div class="svc-tab-body">
           <p class="svc-tab-desc">Scroll-stopping short-form video — scripted, shot and edited to convert, not just to trend. Built for TikTok, Reels and Shorts.</p>
-          <a href="#contact" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="contact.html" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-tab" data-svc="4">
@@ -624,7 +624,7 @@
         </div>
         <div class="svc-tab-body">
           <p class="svc-tab-desc">Performance media across Meta, Google &amp; TikTok — managed to ROAS, not vanity metrics. Every dollar tracked, every result shown.</p>
-          <a href="#contact" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="contact.html" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-tab" data-svc="5">
@@ -635,7 +635,7 @@
         </div>
         <div class="svc-tab-body">
           <p class="svc-tab-desc">Fast, beautiful websites and apps — designed and built in-house. From landing pages to full product interfaces, shipped on time.</p>
-          <a href="#contact" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="contact.html" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
     </div>
@@ -674,7 +674,7 @@
         </div>
 
         <!-- CTA card -->
-        <a href="#contact" id="svc-cta-card" style="position:relative;overflow:hidden;flex:1;text-decoration:none;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;background:var(--c-ink);border-radius:18px;padding:1.25rem 1.4rem;">
+        <a href="contact.html" id="svc-cta-card" style="position:relative;overflow:hidden;flex:1;text-decoration:none;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;background:var(--c-ink);border-radius:18px;padding:1.25rem 1.4rem;">
           <div style="position:absolute;left:-30px;bottom:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none;"></div>
           <!-- top row: label + arrow -->
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;">
@@ -809,10 +809,10 @@
 
   /* label + headline: slide up on load */
   .about-label {
-    opacity:0; transform:translateY(20px);
+    opacity:0; transform:rotate(-0.6deg) translateY(32px);
     transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
   }
-  #about.about-section-loaded .about-label { opacity:1; transform:translateY(0); }
+  #about.about-section-loaded .about-label { opacity:1; transform:rotate(-0.6deg) translateY(0); }
 
   /* image fills remaining left column height */
   .about-img-wrap {
@@ -869,6 +869,7 @@
 
   /* connector line */
   .process-line {
+    display:none;
     width:2px; background:var(--c-line); margin:0 auto;
     height:0; transition:height .6s cubic-bezier(.22,1,.36,1);
     border-radius:2px;
@@ -879,7 +880,7 @@
 <div class="mx-auto max-w-[1600px]">
 
   <!-- section label -->
-  <p class="about-label font-sans text-xs uppercase tracking-[0.18em] text-muted mb-4">[ About us ]</p>
+  <div data-reveal="tag" class="about-label mb-6"><span class="hero-tag"><span class="hero-tag-text">About us</span></span></div>
   <div class="about-grid" id="about-grid">
 
     <!-- LEFT: headline + paragraph + image -->
@@ -1039,7 +1040,7 @@
           style="font-size:clamp(2.6rem,4.8vw,5.2rem);">
         Let's Get Work and Make Something Great.
       </h2>
-      <a href="mailto:hello@scootup.studio" data-flip
+      <a href="contact.html" data-flip
          class="self-start inline-flex items-center gap-3 rounded-full border border-onbrand text-onbrand font-semibold px-8 py-4 text-base hover:bg-onbrand hover:text-brand transition-colors">
         Let's collaborate
         <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
@@ -1119,10 +1120,10 @@
       <div>
         <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Studio</h4>
         <ul class="space-y-2.5 text-sm">
-          <li><a href="#work" class="link-u">Work</a></li>
+          <li><a href="work.html" class="link-u">Work</a></li>
           <li><a href="#services" class="link-u">Services</a></li>
-          <li><a href="#partners" class="link-u">Clients</a></li>
-          <li><a href="#contact" class="link-u">Contact</a></li>
+          <li><a href="about.html" class="link-u">About</a></li>
+          <li><a href="contact.html" class="link-u">Contact</a></li>
         </ul>
       </div>
       <div>
