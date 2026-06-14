@@ -129,8 +129,7 @@
       host.classList.add("rot-cta");
       attachCursorPill(host, "Let\u2019s start yours");
       host.addEventListener("click", () => {
-        const t = document.querySelector("#contact");
-        if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" });
+        window.location.href = "contact.html";
       });
 
       const sizeHost = () => {
@@ -292,6 +291,11 @@
       if (Math.abs(d) > 0.01) spinTo(targetPos + d);
     }));
     attachCursorPill(stage, "View Project", (e) => !!e.target.closest(".car-card.is-front"));
+    stage.addEventListener("click", (e) => {
+      if (e.target.closest(".car-card.is-front")) {
+        window.location.href = "work-project.html";
+      }
+    });
   }
 
   /* ---------- DROPDOWN MENU ---------- */
