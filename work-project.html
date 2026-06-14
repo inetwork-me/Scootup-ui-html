@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8" />
@@ -22,9 +22,9 @@
 </style>
 <style>
   /* ---------- THEME TOKENS ---------- */
-  :root,[data-theme="light"]{--c-paper:#f1ede3;--c-surface:#fbf9f2;--c-ink:#15231e;--c-muted:#5a6961;--c-brand:#1f5a4c;--c-onbrand:#f1ede3;--c-line:rgba(31,90,76,.14);--c-accent:#cf6f44;--c-onaccent:#fbf7f0;}
-  [data-theme="dark"]{--c-paper:#0c1611;--c-surface:#11201a;--c-ink:#edf2ec;--c-muted:#8fa097;--c-brand:#57b39a;--c-onbrand:#0c1611;--c-line:rgba(255,255,255,.10);--c-accent:#e08a5d;--c-onaccent:#160d07;}
-  [data-theme="forest"]{--c-paper:#1f5a4c;--c-surface:#1b5044;--c-ink:#f1ede3;--c-muted:#bdd4cb;--c-brand:#f0e6d4;--c-onbrand:#1f5a4c;--c-line:rgba(255,255,255,.18);--c-accent:#df8154;--c-onaccent:#fbf7f0;}
+  :root,[data-theme="light"]{--c-paper:#f1ede3;--c-surface:#fbf9f2;--c-ink:#15231e;--c-muted:#5a6961;--c-brand:#73c1b5;--c-onbrand:#f1ede3;--c-line:rgba(115,193,181,.14);--c-accent:#f35b2d;--c-onaccent:#fbf7f0;}
+  [data-theme="dark"]{--c-paper:#0c1611;--c-surface:#11201a;--c-ink:#edf2ec;--c-muted:#8fa097;--c-brand:#73c1b5;--c-onbrand:#0c1611;--c-line:rgba(255,255,255,.10);--c-accent:#f35b2d;--c-onaccent:#160d07;}
+  [data-theme="forest"]{--c-paper:#73c1b5;--c-surface:#62b4a8;--c-ink:#f1ede3;--c-muted:#bdd4cb;--c-brand:#f0e6d4;--c-onbrand:#73c1b5;--c-line:rgba(255,255,255,.18);--c-accent:#f35b2d;--c-onaccent:#fbf7f0;}
 
   html{scroll-behavior:auto;}
   body{background:var(--c-paper);color:var(--c-ink);font-family:"Inter",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;transition:background .5s ease,color .5s ease;}
@@ -95,7 +95,7 @@
     border-radius:24px;
     overflow:hidden;
     position:relative;
-    background:linear-gradient(135deg,#1f5a4c 0%,#0d2820 100%);
+    background:linear-gradient(135deg,#73c1b5 0%,#3a8a80 100%);
     display:grid;
     place-items:center;
   }
@@ -113,7 +113,7 @@
   }
   .proj-hero::after{
     content:"";position:absolute;inset:0;
-    background:radial-gradient(ellipse at 60% 40%,color-mix(in srgb,#cf6f44 22%,transparent),transparent 65%);
+    background:radial-gradient(ellipse at 60% 40%,color-mix(in srgb,#f35b2d 22%,transparent),transparent 65%);
     pointer-events:none;
   }
 
@@ -220,7 +220,7 @@
             <div class="flex items-center gap-2" role="group" aria-label="Theme">
               <button data-theme-dot="light" class="theme-dot" style="background:#f1ede3" aria-label="Light theme"></button>
               <button data-theme-dot="dark" class="theme-dot" style="background:#0c1611" aria-label="Dark theme"></button>
-              <button data-theme-dot="forest" class="theme-dot" style="background:#1f5a4c" aria-label="Forest theme"></button>
+              <button data-theme-dot="forest" class="theme-dot" style="background:#73c1b5" aria-label="Forest theme"></button>
             </div>
           </div>
         </div>
@@ -314,8 +314,8 @@
     <div data-reveal="up" style="--d:.15s">
       <div class="section-label mb-6">Project Images</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-20">
-        <div class="img-placeholder" style="background:linear-gradient(135deg,#1f5a4c 0%,#0d2820 100%);"></div>
-        <div class="img-placeholder" style="background:linear-gradient(135deg,#cf6f44 0%,color-mix(in srgb,#cf6f44 60%,#1a0800) 100%);"></div>
+        <div class="img-placeholder" style="background:linear-gradient(135deg,#73c1b5 0%,#3a8a80 100%);"></div>
+        <div class="img-placeholder" style="background:linear-gradient(135deg,#f35b2d 0%,color-mix(in srgb,#f35b2d 60%,#1a0800) 100%);"></div>
         <div class="img-placeholder" style="background:linear-gradient(135deg,#2c4a3e 0%,color-mix(in srgb,#2c4a3e 60%,#000) 100%);"></div>
         <div class="img-placeholder" style="background:linear-gradient(135deg,#5a3a1a 0%,color-mix(in srgb,#5a3a1a 60%,#000) 100%);"></div>
       </div>
