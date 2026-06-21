@@ -171,7 +171,9 @@
       "Bash(./node_modules/.bin/lighthouse https://scootup.local/ --only-categories=best-practices --output=json --output-path=/c/tmp/lh-real.json --chrome-flags=\"--headless\" --quiet)",
       "Bash(./node_modules/.bin/lighthouse https://scootup.local/ --only-categories=best-practices,performance,seo,accessibility --output=json --output-path=/c/tmp/lh-trusted.json --chrome-flags=\"--headless\" --quiet)",
       "Bash(./node_modules/.bin/lighthouse https://scootup.local/ --only-categories=best-practices --output=json --output-path=/c/tmp/lh-new.json --chrome-flags=\"--headless=new\" --quiet)",
-      "Bash(node -e 'const fs=require\\(\"fs\"\\);if\\(!fs.existsSync\\(\"/c/tmp/lh-new.json\"\\)\\){console.log\\(\"still failed\"\\);process.exit\\(0\\);}const r=require\\(\"/c/tmp/lh-new.json\"\\);console.log\\(\"BP:\",Math.round\\(r.categories[\"best-practices\"].score*100\\),\"final:\",r.finalDisplayedUrl\\);')"
+      "Bash(node -e 'const fs=require\\(\"fs\"\\);if\\(!fs.existsSync\\(\"/c/tmp/lh-new.json\"\\)\\){console.log\\(\"still failed\"\\);process.exit\\(0\\);}const r=require\\(\"/c/tmp/lh-new.json\"\\);console.log\\(\"BP:\",Math.round\\(r.categories[\"best-practices\"].score*100\\),\"final:\",r.finalDisplayedUrl\\);')",
+      "PowerShell(git push --force-with-lease origin wordpress-theme)",
+      "Bash(git rm *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\fibis\\.claude\\projects\\c--Users-fibis-Local-Sites-scootup-app-public-wp-content-themes-Scootup-ui-html\\memory",
