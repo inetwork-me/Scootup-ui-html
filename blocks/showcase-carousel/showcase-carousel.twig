@@ -1,0 +1,34 @@
+{# scootup/showcase-carousel — attrs: eyebrow, heading, slides[] of {imageUrl, imageAlt, title, url}.
+   Reproduces the mockup #work section framing (pt + eyebrow tag + heading), inner carousel attribute-driven. #}
+{% set placeholder = (theme.link | default('')) ~ '/assets/images/placeholder.webp' %}
+{% set slides = slides | default([]) %}
+{% if slides is empty %}
+  {% set slides = [
+    { imageUrl: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fm=webp&fit=crop&w=1000&q=80', imageAlt: 'Verde Botanicals', title: 'Verde Botanicals — Brand & Web', url: '#' },
+    { imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fm=webp&fit=crop&w=1000&q=80', imageAlt: 'Pacer Athletics', title: 'Pacer Athletics — Performance Reels', url: '#' },
+    { imageUrl: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fm=webp&fit=crop&w=1000&q=80', imageAlt: 'Lumen Studio', title: 'Lumen Studio — UI/UX & Web', url: '#' }
+  ] %}
+{% endif %}
+<section id="work" class="pt-24 md:pt-36">
+  <div class="mx-auto max-w-[1600px] px-5 md:px-10 mb-10 md:mb-14">
+    <div data-reveal="tag" class="mb-5 flex justify-center"><span class="hero-tag"><span class="hero-tag-text">{{ eyebrow | default('Selected work') }}</span></span></div>
+    <h2 data-reveal="words" class="text-center font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.4rem,6.5vw,5.5rem)]">
+      {{ heading | default('Proof, not promises.') }}
+    </h2>
+  </div>
+
+  <div class="car-stage" data-carousel data-reveal="fade">
+    {% for slide in slides %}
+      {% set src = slide.imageUrl | default(placeholder) %}
+      <figure class="car-card" data-car-slide>
+        <a href="{{ slide.url | default('#') }}" aria-label="{{ slide.title | default(slide.imageAlt) | default('') }}">
+          <picture>
+            <source srcset="{{ src }}" type="image/webp">
+            <img alt="{{ slide.imageAlt | default('') }}" width="1000" height="1250" loading="lazy" decoding="async" src="{{ src }}">
+          </picture>
+          <figcaption class="car-cap"><span class="car-dot"></span>{{ slide.title | default('') }}</figcaption>
+        </a>
+      </figure>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/testimonial-card",
+  "title": "Testimonial Card",
+  "category": "design",
+  "icon": "format-quote",
+  "description": "A client testimonial card with star rating, quote and author.",
+  "keywords": [
+    "scootup",
+    "testimonial",
+    "review"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "quote": {
+      "type": "string",
+      "default": ""
+    },
+    "rating": {
+      "type": "number",
+      "default": 5
+    },
+    "author": {
+      "type": "string",
+      "default": ""
+    },
+    "role": {
+      "type": "string",
+      "default": ""
+    },
+    "platform": {
+      "type": "string",
+      "default": "instagram"
+    },
+    "avatarUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/testimonial-card/index.js",
+  "render": "file:./render.php"
+}

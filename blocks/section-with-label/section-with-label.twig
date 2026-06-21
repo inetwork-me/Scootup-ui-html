@@ -1,0 +1,11 @@
+<div class="mb-12" data-reveal="up">
+  {% if label | default('') %}
+    <div class="section-label">{{ label }}</div>
+  {% endif %}
+  {% if title | default('') %}
+    <h2 class="section-title">{{ title }}</h2>
+  {% endif %}
+  {% if body | default('') %}
+    <p class="body-text">{{ body }}</p>
+  {% endif %}
+</div>

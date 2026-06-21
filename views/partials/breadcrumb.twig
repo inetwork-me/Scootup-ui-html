@@ -1,0 +1,11 @@
+{# Breadcrumb — pass `crumbs` as an array of { label, url }. Last item is the current page. #}
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  {% for c in crumbs | default([]) %}
+    {% if loop.last %}
+      <span aria-current="page">{{ c.label | default('') }}</span>
+    {% else %}
+      <a href="{{ c.url | default('#') }}">{{ c.label | default('') }}</a>
+      <span class="breadcrumb-sep" aria-hidden="true">/</span>
+    {% endif %}
+  {% endfor %}
+</nav>

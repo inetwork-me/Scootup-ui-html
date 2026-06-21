@@ -1,0 +1,49 @@
+{# scootup/services-grid — DYNAMIC. Mirrors the term-grid card markup from views/page-work.twig. #}
+<section class="py-24 px-5 md:px-10">
+  <div class="mx-auto max-w-[1600px]">
+
+    {% if heading | default('') or intro | default('') %}
+      <div class="mb-12 md:mb-16">
+        <div data-reveal="tag" class="mb-5 flex justify-center"><span class="hero-tag"><span class="hero-tag-text">{{ eyebrow | default('What We Do') }}</span></span></div>
+        {% if heading | default('') %}
+          <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[.92] text-[clamp(2.4rem,5vw,5rem)] mb-5">
+            {{ heading | default('What we do') }}
+          </h2>
+        {% endif %}
+        {% if intro | default('') %}
+          <p data-reveal="up" style="--d:.1s" class="text-muted text-[clamp(.95rem,1.6vw,1.1rem)] max-w-2xl leading-relaxed">
+            {{ intro }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+      {% for term in terms | default([]) %}
+        {% set _icon = term.meta('_service_icon') | default('') %}
+        {# Display count: editable _service_count meta (marketing figure) falls back to the live term count. #}
+        {% set _count = term.meta('_service_count') | default(term.count) | default(0) %}
+        <a href="{{ term.link | default('#') }}" class="work-card" data-reveal="up" data-reveal-delay="{{ (loop.index0 * 0.05) | round(2) }}">
+          <div class="work-card-accent-line" aria-hidden="true"></div>
+          <div class="work-card-ico" aria-hidden="true">
+            {% if _icon %}
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-{{ _icon }}"></use></svg>
+            {% else %}
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            {% endif %}
+          </div>
+          <div class="work-card-title">{{ term.name | default('') }}</div>
+          <div class="work-card-desc">{{ term.meta('_service_tagline') | default(term.description) | default('') }}</div>
+          <div class="work-card-foot">
+            <span class="work-card-count">{{ _count }} {{ _count == 1 ? 'project' : 'projects' }}</span>
+            <span class="work-card-arrow" aria-hidden="true">
+              <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+            </span>
+          </div>
+        </a>
+      {% else %}
+        <p class="text-muted">No services to show yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>

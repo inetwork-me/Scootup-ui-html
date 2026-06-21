@@ -1,0 +1,13 @@
+{# Marquee — pass `items` (array of strings), optional `reverse` (bool), optional `dur` (e.g. '44s'). #}
+<div class="marquee-mask">
+  <div class="marquee{% if reverse | default(false) %} rev{% endif %}" style="--dur:{{ dur | default('44s') }}">
+    {# duplicate the list twice for a seamless loop #}
+    {% for pass in 1..2 %}
+      <div class="flex items-center gap-3 md:gap-4 pr-3 md:pr-4" {% if not loop.first %}aria-hidden="true"{% endif %}>
+        {% for item in items | default([]) %}
+          <span class="partner-chip">{{ item | default('') }}</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

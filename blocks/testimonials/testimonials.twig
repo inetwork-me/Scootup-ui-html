@@ -1,0 +1,54 @@
+{# scootup/testimonials — DYNAMIC. Mirrors the dual opposite-direction marquee rows from views/page-reels.twig. #}
+
+{% set _fallback_testi = [
+  { quote: '"Our reels went from 200 views to consistently hitting 80k+. The team understood our brand voice from day one."', author: 'Sara R.', role: 'Founder, Bloom Skincare', platform: 'instagram', rating: 5 },
+  { quote: '"The 48-hour turnaround is real. We brief on Monday and reels are ready to post by Wednesday."', author: 'James M.', role: 'Marketing Lead, Vault Coffee', platform: 'tiktok', rating: 5 },
+  { quote: '"The quality is genuinely better than what our in-house team was producing. Followers noticed instantly."', author: 'Lena P.', role: 'CEO, Fern Studio', platform: 'instagram', rating: 5 },
+  { quote: '"3x reach in 45 days. Now we get 16 reels per month and they actually convert to DMs."', author: 'David K.', role: 'Owner, Atlas Fitness', platform: 'tiktok', rating: 5 },
+  { quote: '"Our food brand went from invisible to 120k views on a single reel within the first week."', author: 'Maya T.', role: 'Co-founder, Ruya Kitchen', platform: 'instagram', rating: 5 },
+  { quote: '"Scoot Up delivers faster and the hooks are way sharper. My engagement rate doubled."', author: 'Nadia O.', role: 'Personal Brand Coach', platform: 'linkedin', rating: 5 },
+  { quote: '"Every reel has a proper hook and pay-off. People actually watch to the end."', author: 'Chris W.', role: 'Director, Onyx Architecture', platform: 'instagram', rating: 5 },
+  { quote: '"Now we post daily and have a waitlist. Short-form video changed everything for our studio."', author: 'Aisha H.', role: 'Founder, Pillar Pilates', platform: 'tiktok', rating: 5 },
+  { quote: '"They nailed our brand aesthetic in the first batch — zero back-and-forth needed."', author: 'Rafael B.', role: 'CMO, Kova Spirits', platform: 'instagram', rating: 5 },
+  { quote: '"Our YouTube Shorts went from 500 to 40k subs in two months."', author: 'Elena V.', role: 'Content Creator', platform: 'youtube', rating: 5 }
+] %}
+
+{# `testimonials` is a normalised list ({quote,author,role,platform,rating})
+   built in render.php from each post's scootup/testimonial-card block. Falls
+   back to the static mockup set when there are no testimonial posts. #}
+{% set _testi = testimonials | default([]) | length ? testimonials : _fallback_testi %}
+
+{# Split into two rows so each marquee track scrolls opposite directions. #}
+{% set _half = (_testi|length / 2)|round(0, 'ceil') %}
+{% set _row1 = _testi|slice(0, _half) %}
+{% set _row2 = _testi|slice(_half) %}
+{% if _row2|length == 0 %}{% set _row2 = _row1 %}{% endif %}
+
+<section class="testi-section" id="testi-sec">
+  <div class="testi-header">
+    <div data-reveal="tag" class="mb-4 flex justify-center"><span class="hero-tag"><span class="hero-tag-text">What clients say</span></span></div>
+    <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[.92] text-[clamp(2rem,4.5vw,3.8rem)]">Real brands,<br>real results.</h2>
+  </div>
+
+  <!-- Row 1 — scrolls left -->
+  <div class="testi-row" id="testi-row-1">
+    <div class="testi-track" id="testi-track-1">
+      {% for t in _row1 %}
+        {% include 'blocks/testimonial-card/testimonial-card.twig' with {
+          quote: t.quote, author: t.author, role: t.role, platform: t.platform, rating: t.rating
+        } only %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Row 2 — scrolls right -->
+  <div class="testi-row" id="testi-row-2">
+    <div class="testi-track" id="testi-track-2">
+      {% for t in _row2 %}
+        {% include 'blocks/testimonial-card/testimonial-card.twig' with {
+          quote: t.quote, author: t.author, role: t.role, platform: t.platform, rating: t.rating
+        } only %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

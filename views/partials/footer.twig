@@ -1,0 +1,63 @@
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-line pt-16 md:pt-20 overflow-hidden" role="contentinfo">
+  <div class="mx-auto max-w-[1600px] px-5 md:px-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 pb-16">
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center gap-2.5 mb-4">
+          <picture>
+            <source srcset="{{ theme.link | default('') }}/assets/logo.webp" type="image/webp">
+            <img src="{{ theme.link | default('') }}/assets/logo.png" alt="" width="32" height="32" class="w-8 h-8" loading="lazy" decoding="async">
+          </picture>
+          <span class="font-display font-extrabold text-lg">{{ site.name | default('Scoot Up') }}</span>
+        </div>
+        <p class="text-muted text-sm max-w-[14rem]">{{ footer_tagline | default('A growth studio moving brands up & to the right since 2019.') }}</p>
+      </div>
+
+      <div>
+        <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Studio</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="{{ site.url | default('') }}/work" class="link-u">Work</a></li>
+          <li><a href="{{ site.url | default('') }}/#services" class="link-u">Services</a></li>
+          <li><a href="{{ site.url | default('') }}/about" class="link-u">About</a></li>
+          <li><a href="{{ site.url | default('') }}/contact" class="link-u">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Social</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="{{ social.instagram | default('#') }}" class="link-u">Instagram</a></li>
+          <li><a href="{{ social.linkedin | default('#') }}" class="link-u">LinkedIn</a></li>
+          <li><a href="{{ social.dribbble | default('#') }}" class="link-u">Dribbble</a></li>
+          <li><a href="{{ social.behance | default('#') }}" class="link-u">Behance</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-mono text-[11px] uppercase tracking-wider text-muted mb-4">Say hi</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="mailto:{{ contact_email | default('hello@scootup.studio') }}" class="link-u">{{ contact_email | default('hello@scootup.studio') }}</a></li>
+          <li class="text-muted">{{ contact_location | default('San Francisco · Remote') }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative select-none">
+    <div class="bigword font-display text-center px-4 pb-4 text-brand">{{ footer_wordmark | default('SCOOT UP') }}</div>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="mx-auto max-w-[1600px] px-5 md:px-10 py-6 flex flex-col sm:flex-row justify-between gap-3 text-xs font-mono text-muted">
+      <span>© <span data-year>{{ "now"|date("Y") }}</span> {{ site.name | default('Scoot Up') }} Studio. All rights reserved.</span>
+      <span class="inline-flex items-center gap-1.5">Designed to move <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg></span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="{{ whatsapp_url | default('https://wa.me/201501818772') }}" target="_blank" rel="noopener noreferrer" class="wa-fab" aria-label="Chat on WhatsApp">
+  {% include 'partials/icon.twig' with { name: 'whatsapp' } %}
+</a>
+
+{{ function('wp_footer') }}

@@ -1,0 +1,75 @@
+{# scootup/services-accordion — attrs: eyebrow, heading, services[] of {title, description, imageUrl}, ctaUrl.
+   Reproduces the mockup #services section framing (py/px + eyebrow tag + heading), inner accordion attribute-driven. #}
+{% set placeholder = (theme.link | default('')) ~ '/assets/images/placeholder.webp' %}
+{% set services = services | default([]) %}
+{% if services is empty %}
+  {% set services = [
+    { title: 'Social Media Design', description: 'Scroll-stopping visuals crafted for every platform — feeds, stories, carousels and ads that stop the scroll and drive engagement.', imageUrl: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80&auto=format&fm=webp&fit=crop' },
+    { title: 'Designing', description: 'Brand systems, identity and art direction — print, digital, packaging — that make you impossible to ignore wherever you show up.', imageUrl: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80&auto=format&fm=webp&fit=crop' },
+    { title: 'Branding', description: "Your brand's compass — logo, voice, positioning and strategy. We build brands that resonate, differentiate and grow with you.", imageUrl: 'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=800&q=80&auto=format&fm=webp&fit=crop' }
+  ] %}
+{% endif %}
+{% set cta = ctaUrl | default('#') %}
+<section id="services" class="py-24 md:py-40 px-5 md:px-10">
+  <div class="mx-auto max-w-[1600px]">
+    <div data-reveal="tag" class="mb-5 flex justify-center"><span class="hero-tag"><span class="hero-tag-text">{{ eyebrow | default('What we do') }}</span></span></div>
+    <h2 data-reveal="words" class="text-center font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.4rem,6.5vw,5.5rem)] mb-16">
+      {{ heading | default('Everything your brand needs, under one roof.') }}
+    </h2>
+
+    <div class="svc-grid grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start" id="svc-grid">
+      <div id="svc-tabs" class="svc-col-left">
+        {% for svc in services %}
+          <div class="svc-tab{% if loop.first %} is-open{% endif %}" data-svc="{{ loop.index0 }}">
+            <div class="svc-tab-hd">
+              <span class="svc-tab-num">{{ '%02d'|format(loop.index) }}</span>
+              <span class="svc-tab-name">{{ svc.title | default('') }}</span>
+              <span class="svc-tab-ico"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></span>
+            </div>
+            <div class="svc-tab-body">
+              <p class="svc-tab-desc">{{ svc.description | default('') }}</p>
+              <a href="{{ svc.url | default(cta) }}" class="svc-tab-cta">Learn more <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="svc-col-right flex flex-col gap-4 h-[620px] sticky top-[90px]">
+        <div class="svc-img-wrap">
+          {% for svc in services %}
+            {% set src = svc.imageUrl | default(placeholder) %}
+            <img data-svc-img="{{ loop.index0 }}"{% if loop.first %} class="is-active"{% endif %} src="{{ src }}" alt="{{ svc.title | default('') }}" width="800" height="600" loading="lazy" decoding="async">
+          {% endfor %}
+        </div>
+
+        {# stat cards — green rating (updates per active service via app.js) + dark CTA #}
+        <div class="flex gap-4 shrink-0 h-[190px]">
+          <div class="svc-card-brand relative overflow-hidden flex-[1.1]">
+            <div class="absolute -right-7 -bottom-7 w-[110px] h-[110px] rounded-full border border-brand-on/20 pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute -right-2.5 -bottom-2.5 w-[70px] h-[70px] rounded-full border border-brand-on/10 pointer-events-none" aria-hidden="true"></div>
+            <div class="flex flex-col h-full justify-between relative z-10">
+              <div>
+                <div class="svc-card-lbl" id="svc-sl">Avg. Client Rating</div>
+                <div class="svc-card-val mt-2" id="svc-sv">4.9★</div>
+              </div>
+              <div class="flex gap-[3px] items-center text-base opacity-90" aria-hidden="true">★★★★★</div>
+            </div>
+          </div>
+
+          <a href="{{ cta }}" id="svc-cta-card" class="svc-card-ink relative overflow-hidden flex-1 no-underline">
+            <div class="absolute -left-8 -bottom-8 w-[110px] h-[110px] rounded-full bg-brand-on/[0.08] pointer-events-none" aria-hidden="true"></div>
+            <div class="flex items-start justify-between gap-2 relative z-10">
+              <div>
+                <div class="svc-card-lbl mb-2">Ready to grow?</div>
+                <div class="font-display font-extrabold text-[1.75rem] leading-tight tracking-[-0.03em]">Start your<br>Project</div>
+              </div>
+              <span id="svc-cta-arrow" class="inline-flex items-center justify-center w-[42px] h-[42px] rounded-full bg-brand shrink-0 transition-transform duration-500">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-on" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

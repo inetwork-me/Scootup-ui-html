@@ -1,0 +1,64 @@
+{# scootup/page-hero — attrs: crumbs[], tag, heading, lead, primaryLabel, primaryUrl, secondaryLabel, secondaryUrl, imageUrl, imageAlt #}
+{% set _placeholder = theme.link | default('') ~ '/assets/images/placeholder.webp' %}
+{% set _img = imageUrl | default('') %}
+<section class="pt-36 md:pt-44 pb-16 px-5 md:px-10">
+  <div class="mx-auto max-w-[1600px]">
+
+    {% if crumbs is not empty %}
+      {% include 'partials/breadcrumb.twig' with { crumbs: crumbs } %}
+    {% endif %}
+
+    <div class="{{ _img ? 'ab-hero-grid' : '' }}">
+
+      {# LEFT: copy #}
+      <div>
+        {% if tag | default('') %}
+          <div data-reveal="tag" class="mb-7">
+            <span class="hero-tag">{{ tag }}</span>
+          </div>
+        {% endif %}
+
+        <h1 data-reveal="words" class="font-display font-extrabold tracking-[-0.038em] leading-[0.92] text-[clamp(3rem,7vw,7.5rem)] mb-7">
+          {{ heading | default('We move brands up & to the right.') | nl2br }}
+        </h1>
+
+        {% if lead | default('') %}
+          <p data-reveal="up" style="--d:.15s" class="text-muted text-[clamp(1rem,1.8vw,1.2rem)] max-w-xl leading-relaxed mb-4">
+            {{ lead }}
+          </p>
+        {% endif %}
+
+        <div data-reveal="up" style="--d:.25s" class="flex flex-wrap gap-3 mt-2">
+          {% if primaryLabel | default('') %}
+            <a href="{{ primaryUrl | default('#') }}" class="inline-flex items-center gap-2 rounded-full bg-brand text-onbrand font-bold px-7 py-4 text-base transition-opacity hover:opacity-90 flip-btn" data-flip>
+              {{ primaryLabel }} <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+            </a>
+          {% endif %}
+          {% if secondaryLabel | default('') %}
+            <a href="{{ secondaryUrl | default('#') }}" class="inline-flex items-center gap-2 rounded-full border border-line text-ink font-semibold px-7 py-4 text-base transition-colors hover:border-brand hover:text-brand flip-btn" data-flip>
+              {{ secondaryLabel }} <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      {# RIGHT: optional company image (LCP — eager + fetchpriority) #}
+      {% if _img %}
+        <div data-reveal="fade" style="--d:.3s">
+          <div class="relative rounded-[32px] overflow-hidden aspect-[4/3] bg-surface border border-line flex flex-col items-center justify-center gap-5">
+            <picture>
+              <source srcset="{{ _img | default(_placeholder) }}" type="image/webp">
+              <img
+                src="{{ _img | default(_placeholder) }}"
+                alt="{{ imageAlt | default(heading) | default('') }}"
+                width="800" height="600"
+                loading="eager" fetchpriority="high" decoding="async"
+                class="w-full h-full object-cover">
+            </picture>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>

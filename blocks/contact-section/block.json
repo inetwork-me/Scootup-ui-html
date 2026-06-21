@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/contact-section",
+  "title": "Contact Section",
+  "category": "design",
+  "icon": "email-alt",
+  "description": "Two-column contact section: CF7 form (left) plus contact-info items, copy-email and social pills (right). Form id is read from the page's _cf7_contact_id meta.",
+  "keywords": [
+    "scootup",
+    "contact",
+    "form",
+    "cf7"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "intro": {
+      "type": "string",
+      "default": ""
+    },
+    "email": {
+      "type": "string",
+      "default": ""
+    },
+    "phone": {
+      "type": "string",
+      "default": ""
+    },
+    "location": {
+      "type": "string",
+      "default": ""
+    },
+    "instagram": {
+      "type": "string",
+      "default": ""
+    },
+    "linkedin": {
+      "type": "string",
+      "default": ""
+    },
+    "github": {
+      "type": "string",
+      "default": ""
+    },
+    "dribbble": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/contact-section/index.js",
+  "render": "file:./render.php"
+}

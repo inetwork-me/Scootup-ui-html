@@ -1,0 +1,52 @@
+{# scootup/about-split — attrs: eyebrow, heading, body, imageUrl, imageAlt, steps[] of {number,title,description}.
+   Reproduces the mockup #about section framing (py/px + border-t + eyebrow label), inner split attribute-driven. #}
+{% set placeholder = (theme.link | default('')) ~ '/assets/images/placeholder.webp' %}
+{% set steps = steps | default([]) %}
+{% if steps is empty %}
+  {% set steps = [
+    { number: 'Step 01', title: 'Discovery Call',     description: 'We listen first. Understand your goals, audience and where you want to be.' },
+    { number: 'Step 02', title: 'Strategy & Roadmap', description: 'We map a clear plan — positioning, channels, milestones and metrics.' },
+    { number: 'Step 03', title: 'Design & Build',     description: 'Our in-house team executes — visuals, copy, code and content, all under one roof.' },
+    { number: 'Step 04', title: 'Launch & Optimise',  description: "We go live, track every number and keep improving. Results aren't a one-time thing." }
+  ] %}
+{% endif %}
+{% set src = imageUrl | default('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fm=webp&fit=crop&w=1200&q=80') %}
+<section id="about" class="py-24 md:py-40 px-5 md:px-10 border-t border-line overflow-hidden">
+  <div class="mx-auto max-w-[1600px]">
+
+    <div data-reveal="tag" class="about-label mb-6"><span class="hero-tag"><span class="hero-tag-text">{{ eyebrow | default('About us') }}</span></span></div>
+    <div class="about-grid grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-stretch" id="about-grid">
+      <div class="about-left">
+        <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.03em] leading-[0.98] text-[clamp(2rem,4vw,3.6rem)]">
+          {{ heading | default('Big-agency firepower,<br>boutique obsession.') | raw }}
+        </h2>
+        <p class="mt-5 text-base text-muted leading-relaxed">
+          {{ body | default('Scoot Up is a compact, senior team of marketers, designers and developers. No account-manager telephone game, no junior hand-offs — you work directly with the people building your brand.') }}
+        </p>
+        <div class="about-img-wrap">
+          <picture>
+            <source srcset="{{ src }}" type="image/webp">
+            <img src="{{ src }}" alt="{{ imageAlt | default('The Scoot Up studio team') }}" width="1200" height="800" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </div>
+      <div class="about-right">
+        <div id="process-list">
+          {% for step in steps %}
+            <div class="process-line" data-reveal="up"{% if not loop.first %} style="--d:{{ loop.index0 * 0.05 }}s"{% endif %}></div>
+            <div class="process-step" data-reveal="up"{% if not loop.first %} style="--d:{{ loop.index0 * 0.05 }}s"{% endif %}>
+              <div class="process-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="process-body">
+                <div class="process-num">{{ step.number | default('') }}</div>
+                <div class="process-title">{{ step.title | default('') }}</div>
+                <div class="process-desc">{{ step.description | default('') }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

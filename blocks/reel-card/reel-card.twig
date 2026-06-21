@@ -1,0 +1,19 @@
+{# Single 9:16 reel card. Attributes: imageUrl, imageAlt, caption, handle, platform, videoUrl #}
+{% set _placeholder = theme.link | default('') ~ '/assets/images/placeholder.webp' %}
+{% set _src = imageUrl | default(_placeholder) %}
+<article class="rh-card">
+  <picture>
+    <source srcset="{{ _src }}" type="image/webp">
+    <img
+      src="{{ _src }}"
+      alt="{{ imageAlt | default(caption) | default('') }}"
+      width="560"
+      height="996"
+      loading="lazy"
+      decoding="async">
+  </picture>
+  <div class="rh-card-cap">
+    <span class="rh-card-dot" aria-hidden="true"></span>
+    {{ handle | default('@yourbrand') }}
+  </div>
+</article>

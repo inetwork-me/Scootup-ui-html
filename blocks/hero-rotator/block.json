@@ -1,0 +1,77 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/hero-rotator",
+  "title": "Hero Rotator",
+  "category": "design",
+  "icon": "superhero",
+  "description": "Hero with rotating word, dual CTAs and tagline.",
+  "keywords": [
+    "scootup",
+    "hero",
+    "rotator"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "tagline": {
+      "type": "string",
+      "default": "Service growth studio"
+    },
+    "headingPrefix": {
+      "type": "string",
+      "default": "We scoot brands"
+    },
+    "rotatingWords": {
+      "type": "array",
+      "default": [
+        "brands",
+        "reels",
+        "websites",
+        "results",
+        "stories"
+      ]
+    },
+    "headingSuffix": {
+      "type": "string",
+      "default": "up & to the right."
+    },
+    "lead": {
+      "type": "string",
+      "default": "Marketing, design & development for teams that refuse to plateau. We blend strategy, story and sharp execution to move the numbers that matter."
+    },
+    "stats": {
+      "type": "array",
+      "default": [
+        { "value": "90", "suffix": "+", "label": "brands worked with" },
+        { "value": "150", "suffix": "+", "label": "projects delivered" },
+        { "value": "6", "suffix": "+", "label": "years of experience" },
+        { "value": "4.9", "label": "average review", "isRating": true, "dec": "1" }
+      ]
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "Start a project"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "secondaryLabel": {
+      "type": "string",
+      "default": "See our work"
+    },
+    "secondaryUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  },
+  "editorScript": "file:../../dist/blocks/hero-rotator/index.js",
+  "render": "file:./render.php"
+}

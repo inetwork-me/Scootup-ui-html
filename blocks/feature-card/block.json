@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/feature-card",
+  "title": "Feature Card",
+  "category": "design",
+  "icon": "list-view",
+  "description": "A numbered value/feature card with a big number, title and description.",
+  "keywords": [
+    "scootup",
+    "feature",
+    "value",
+    "card"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "number": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/feature-card/index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,35 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ meta_title | default(site.name) }} | {{ site.name }}</title>
+<meta name="description" content="{{ meta_description | default('') }}">
+<meta name="robots" content="{{ robots_directive | default('index,follow') }}">
+<link rel="canonical" href="{{ canonical_url | default(site.url) }}">
+
+{# Preconnect to Google Fonts origins, then load the families with display=swap (Rule 5) #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+{# Preload the above-the-fold LCP image when a template provides one (Rule 5) #}
+{% if lcp_image_url %}<link rel="preload" as="image" href="{{ lcp_image_url }}" fetchpriority="high">{% endif %}
+
+{# Open Graph #}
+<meta property="og:title"       content="{{ meta_title | default(site.name) }}">
+<meta property="og:description" content="{{ meta_description | default('') }}">
+<meta property="og:image"       content="{{ og_image | default('') }}">
+<meta property="og:url"         content="{{ canonical_url | default(site.url) }}">
+<meta property="og:type"        content="{{ og_type | default('website') }}">
+<meta property="og:site_name"   content="{{ site.name }}">
+
+{# Twitter / X Card #}
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="{{ meta_title | default(site.name) }}">
+<meta name="twitter:description" content="{{ meta_description | default('') }}">
+<meta name="twitter:image"       content="{{ og_image | default('') }}">
+
+{% if author_name %}<meta name="author" content="{{ author_name }}">{% endif %}
+
+{# Structured Data (SEO + AEO + GEO) #}
+<script type="application/ld+json">{{ schema_json | raw }}</script>
+
+{{ function('wp_head') }}

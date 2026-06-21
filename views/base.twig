@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ site.language | default('en') }}" data-theme="light">
+<head>
+  {% include 'partials/head.twig' %}
+  {% if injection.head %}{{ injection.head | raw }}{% endif %}
+</head>
+<body class="font-sans bg-paper text-ink antialiased {{ body_class | default('') }}">
+
+  {% if injection.body_open %}{{ injection.body_open | raw }}{% endif %}
+
+  {% include 'partials/icon-sprite.twig' %}
+
+  <a href="#main"
+     class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-surface focus:text-ink focus:px-4 focus:py-2 focus:rounded focus:shadow-lg">
+    Skip to main content
+  </a>
+
+  {% include 'partials/header.twig' %}
+
+  {% block content %}{% endblock %}
+
+  {% include 'partials/footer.twig' %}
+  {% if injection.body_close %}{{ injection.body_close | raw }}{% endif %}
+
+  {% if injection.after_footer %}{{ injection.after_footer | raw }}{% endif %}
+
+</body>
+</html>

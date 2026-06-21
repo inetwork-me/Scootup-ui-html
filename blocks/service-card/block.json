@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/service-card",
+  "title": "Service Card",
+  "category": "design",
+  "icon": "screenoptions",
+  "description": "A linked service card with icon, title, description, badge and arrow.",
+  "keywords": [
+    "scootup",
+    "service",
+    "card"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "badge": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/service-card/index.js",
+  "render": "file:./render.php"
+}

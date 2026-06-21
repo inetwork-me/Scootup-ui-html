@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/prose",
+  "title": "Prose",
+  "category": "design",
+  "icon": "editor-paragraph",
+  "description": "A reading-width content section. Add headings, paragraphs and dividers as normal blocks inside it.",
+  "keywords": [
+    "scootup",
+    "prose",
+    "content",
+    "body",
+    "text"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "editorScript": "file:../../dist/blocks/prose/index.js",
+  "render": "file:./render.php"
+}

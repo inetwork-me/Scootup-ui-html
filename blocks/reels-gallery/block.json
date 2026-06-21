@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/reels-gallery",
+  "title": "Reels Gallery",
+  "category": "design",
+  "icon": "format-video",
+  "description": "Dynamic vertical 9:16 infinite reel slider populated from the reel post type.",
+  "keywords": [
+    "scootup",
+    "reels",
+    "video",
+    "slider"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Content that stops the scroll."
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "Social Reels"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Short-form video for Instagram, TikTok & YouTube Shorts — built with sharp hooks, fast cuts, and strategy baked in from frame one."
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "Start your reels"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "/contact"
+    },
+    "count": {
+      "type": "number",
+      "default": 8
+    }
+  },
+  "editorScript": "file:../../dist/blocks/reels-gallery/index.js",
+  "render": "file:./render.php"
+}

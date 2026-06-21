@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/project-hero",
+  "title": "Project Hero",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "A 16:9 hero image with an overlaid project title.",
+  "keywords": [
+    "scootup",
+    "project",
+    "hero"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "overlayText": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/project-hero/index.js",
+  "render": "file:./render.php"
+}

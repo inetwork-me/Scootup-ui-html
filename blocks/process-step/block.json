@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/process-step",
+  "title": "Process Step",
+  "category": "design",
+  "icon": "editor-ol",
+  "description": "A single how-we-work process step with icon.",
+  "keywords": [
+    "scootup",
+    "process",
+    "step"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "number": {
+      "type": "string",
+      "default": "Step 01"
+    },
+    "title": {
+      "type": "string",
+      "default": "Discovery Call"
+    },
+    "description": {
+      "type": "string",
+      "default": "We listen first. Understand your goals, audience and where you want to be."
+    },
+    "icon": {
+      "type": "string",
+      "default": "chat"
+    }
+  },
+  "editorScript": "file:../../dist/blocks/process-step/index.js",
+  "render": "file:./render.php"
+}

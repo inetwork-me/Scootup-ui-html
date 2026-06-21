@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/stat-strip",
+  "title": "Stat Strip",
+  "category": "design",
+  "icon": "chart-bar",
+  "description": "Row of animated count-up statistics.",
+  "keywords": [
+    "scootup",
+    "stats"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "stats": {
+      "type": "array",
+      "default": [
+        {
+          "value": "90",
+          "suffix": "+",
+          "label": "brands worked with",
+          "isRating": false
+        },
+        {
+          "value": "150",
+          "suffix": "+",
+          "label": "projects delivered",
+          "isRating": false
+        },
+        {
+          "value": "6",
+          "suffix": "+",
+          "label": "years of experience",
+          "isRating": false
+        },
+        {
+          "value": "4.9",
+          "suffix": "",
+          "label": "average review",
+          "isRating": true
+        }
+      ]
+    }
+  },
+  "editorScript": "file:../../dist/blocks/stat-strip/index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,22 @@
+{% set _placeholder = theme.link ~ '/assets/images/placeholder.webp' %}
+{% set _src = imageUrl | default(_placeholder) %}
+<div class="proj-hero mb-8 md:mb-10" data-reveal="fade">
+  <picture>
+    <source srcset="{{ _src }}" type="image/webp">
+    <img
+      src="{{ _src }}"
+      alt="{{ imageAlt | default(title) | default('') }}"
+      width="1600"
+      height="900"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover">
+  </picture>
+  <div class="proj-hero-name">
+    {{ title | default('') }}
+    {% if overlayText | default('') %}
+      <span class="block text-base font-sans font-normal mt-3 opacity-80">{{ overlayText }}</span>
+    {% endif %}
+  </div>
+</div>

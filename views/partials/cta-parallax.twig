@@ -1,0 +1,60 @@
+{# CTA parallax — brand-colored band with headline + button + 3-column parallax image grid.
+   Variables: heading, cta_label, cta_url, images (array of webp/img URLs).
+   When no images are supplied, fall back to the mockup's 12-image set so the band
+   always matches the static HTML rather than rendering a grid of placeholders. #}
+{% set _cta_fallback = [
+  'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1619451334792-150fd785ee74?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1607006344380-b6775a0824a7?w=400&q=80&auto=format&fm=webp&fit=crop',
+  'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=400&q=80&auto=format&fm=webp&fit=crop'
+] %}
+{% set _imgs = (images | default([]) is not empty) ? images : _cta_fallback %}
+{% set _placeholder = theme.link | default('') ~ '/assets/images/placeholder.webp' %}
+<section class="px-5 md:px-10 pb-24 md:pb-32">
+  <div class="mx-auto max-w-[1600px] rounded-[28px] md:rounded-[40px] bg-brand text-onbrand overflow-hidden cta-inner grid grid-cols-2 h-[610px] max-h-[610px]">
+
+    <!-- LEFT: text content -->
+    <div class="flex flex-col justify-center px-7 md:px-16 py-16 md:py-24 col-span-2 md:col-span-1">
+      <p class="font-sans text-sm opacity-60 mb-6 leading-snug max-w-xs">{{ eyebrow | default("We don't just create—we craft solutions that make an impact.") }}</p>
+      <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] mb-10 text-[clamp(2.6rem,4.8vw,5.2rem)]">
+        {{ heading | default("Let's Get Work and Make Something Great.") }}
+      </h2>
+      <a href="{{ cta_url | default('#') }}" data-flip
+         class="self-start inline-flex items-center gap-3 rounded-full border border-onbrand text-onbrand font-semibold px-8 py-4 text-base hover:bg-onbrand hover:text-brand transition-colors">
+        {{ cta_label | default("Let's collaborate") }}
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+      </a>
+    </div>
+
+    <!-- RIGHT: parallax image grid (3 columns) — hidden on mobile -->
+    <div class="hidden md:flex gap-3 overflow-hidden col-span-1 relative [mask-image:linear-gradient(to_left,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_left,black_70%,transparent_100%)]"
+         aria-hidden="true">
+      {% set _cols = [
+        { dir: -1, mt: '-mt-20' },
+        { dir:  1, mt: 'mt-12'  },
+        { dir: -1, mt: '-mt-8'  }
+      ] %}
+      {% for col in _cols %}
+        <div class="cta-col flex-1 flex flex-col gap-3 will-change-transform {{ col.mt }}" data-par-dir="{{ col.dir }}">
+          {% for i in 0..3 %}
+            {% set idx = (loop.parent.loop.index0 * 4) + i %}
+            {% set _src = _imgs[idx] | default(_placeholder) %}
+            <picture>
+              <source srcset="{{ _src }}" type="image/webp">
+              <img src="{{ _src }}" alt="" width="400" height="220" loading="lazy" decoding="async" class="w-full h-[220px] rounded-2xl object-cover flex-shrink-0">
+            </picture>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>

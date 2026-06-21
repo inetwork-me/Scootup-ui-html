@@ -1,0 +1,18 @@
+{# scootup/process-step — attrs: number, title, description, icon #}
+{% set icon = icon | default('chat') %}
+{% set icons = {
+  'chat':  '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  'chart': '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+  'gear':  '<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>',
+  'trend': '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>'
+} %}
+<div class="process-step" data-reveal="up">
+  <div class="process-icon">
+    <svg viewBox="0 0 24 24">{{ icons[icon] | default(icons['chat']) | raw }}</svg>
+  </div>
+  <div class="process-body">
+    <div class="process-num">{{ number | default('') }}</div>
+    <div class="process-title">{{ title | default('') }}</div>
+    <div class="process-desc">{{ description | default('') }}</div>
+  </div>
+</div>

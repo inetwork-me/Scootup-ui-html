@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/marquee",
+  "title": "Marquee",
+  "category": "design",
+  "icon": "controls-repeat",
+  "description": "Infinite scrolling marquee strip of text chips.",
+  "keywords": [
+    "scootup",
+    "marquee",
+    "ticker",
+    "strip"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        "Brand Strategy",
+        "Reels",
+        "Media Buying",
+        "Web & App",
+        "Social Design",
+        "Branding"
+      ]
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": false
+    },
+    "dur": {
+      "type": "string",
+      "default": "38s"
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "bordered": {
+      "type": "boolean",
+      "default": false
+    },
+    "sectionId": {
+      "type": "string",
+      "default": ""
+    },
+    "accent": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "editorScript": "file:../../dist/blocks/marquee/index.js",
+  "render": "file:./render.php"
+}

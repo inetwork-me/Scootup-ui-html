@@ -1,0 +1,15 @@
+{% set _icon = icon | default('star') %}
+<a href="{{ url | default('#') }}" class="work-card" data-reveal="up">
+  <div class="work-card-accent-line" aria-hidden="true"></div>
+  <div class="work-card-ico" aria-hidden="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-{{ _icon }}"></use></svg>
+  </div>
+  <div class="work-card-title">{{ title | default('') }}</div>
+  <div class="work-card-desc">{{ description | default('') }}</div>
+  <div class="work-card-foot">
+    <span class="work-card-count">{{ badge | default('') }}</span>
+    <span class="work-card-arrow" aria-hidden="true">
+      <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+    </span>
+  </div>
+</a>

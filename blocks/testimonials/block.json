@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/testimonials",
+  "title": "Testimonials",
+  "category": "design",
+  "icon": "format-quote",
+  "description": "Dynamic dual marquee rows of testimonials from the testimonial post type.",
+  "keywords": [
+    "scootup",
+    "testimonials",
+    "reviews",
+    "marquee"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "count": {
+      "type": "number",
+      "default": 10
+    }
+  },
+  "editorScript": "file:../../dist/blocks/testimonials/index.js",
+  "render": "file:./render.php"
+}

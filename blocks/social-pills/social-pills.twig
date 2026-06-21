@@ -1,0 +1,10 @@
+<div class="social-row">
+  {% for l in links | default([]) %}
+    {% set _network = l.network | default('') %}
+    {% set _label = l.label | default(_network | capitalize) | default('Social link') %}
+    <a href="{{ l.url | default('#') }}" class="social-pill" aria-label="{{ _label }}">
+      {% include 'partials/icon.twig' with { name: _network } only %}
+      {{ _label }}
+    </a>
+  {% endfor %}
+</div>

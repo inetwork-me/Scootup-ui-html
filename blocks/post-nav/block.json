@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/post-nav",
+  "title": "Post Nav",
+  "category": "design",
+  "icon": "leftright",
+  "description": "Back link plus a next-project link.",
+  "keywords": [
+    "scootup",
+    "navigation",
+    "project"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "backLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "backUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "nextLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "nextUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/post-nav/index.js",
+  "render": "file:./render.php"
+}

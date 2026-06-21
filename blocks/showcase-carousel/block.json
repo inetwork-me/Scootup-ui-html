@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/showcase-carousel",
+  "title": "Showcase Carousel",
+  "category": "design",
+  "icon": "images-alt2",
+  "description": "Rotating showcase of work cards.",
+  "keywords": [
+    "scootup",
+    "carousel",
+    "work"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Selected work"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Proof, not promises."
+    },
+    "slides": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "editorScript": "file:../../dist/blocks/showcase-carousel/index.js",
+  "render": "file:./render.php"
+}

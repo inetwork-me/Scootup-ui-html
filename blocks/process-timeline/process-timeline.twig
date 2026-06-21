@@ -1,0 +1,75 @@
+{# scootup/process-timeline — attrs: steps[] ({number,icon,title,description,cta,ctaLabel,ctaUrl}).
+   Mirrors the sticky horizontal timeline from reels.html. Each step has a distinct icon
+   (users/pencil/play/chart/phone); the cta step renders the branded end-card variant. #}
+{% set _steps = steps | default([
+  { number: '01 / Brief', icon: 'users', title: 'Brand & Audience Brief', description: 'We learn your voice, audience and goals in a single onboarding call. No 40-page questionnaires.' },
+  { number: '02 / Script', icon: 'pencil', title: 'Script & Concept Approval', description: 'We write the hooks and outline every reel. You approve the direction before a single frame is edited.' },
+  { number: '03 / Edit', icon: 'play', title: 'Edit, Sound & Captions', description: 'Full post-production — b-roll, licensed music, animated captions and brand overlays, all dialled in.' },
+  { number: '04 / Deliver', icon: 'chart', title: 'Deliver, Post & Optimise', description: 'Ready-to-post files delivered. We review metrics after publishing and refine the next batch from day one.' },
+  { number: '05 / Start', icon: 'phone', cta: true, title: 'Ready to start your first reel?', description: "No long contracts, no guesswork. One call and we're building your content.", ctaLabel: "Let's talk", ctaUrl: '/contact' }
+]) %}
+
+<section class="proc-outer" id="proc-outer">
+  <div class="proc-sticky" id="proc-sticky">
+
+    <div class="proc-header">
+      <div data-reveal="tag" class="mb-4"><span class="hero-tag"><span class="hero-tag-text">How it works</span></span></div>
+      <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[.92] text-[clamp(2rem,4vw,3.8rem)]">
+        Brief to published<br>in 48 hours.
+      </h2>
+    </div>
+
+    <div class="proc-viewport" id="proc-viewport">
+      <div class="proc-line-wrap" id="proc-line-wrap">
+        <div class="proc-line-bg">
+          <div class="proc-line-fill" id="proc-line-fill"></div>
+        </div>
+      </div>
+
+      <div class="proc-track" id="proc-track">
+        {% for step in _steps | default([]) %}
+          {% set _icon = step.icon | default('') %}
+          {% set _is_cta = step.cta | default(false) %}
+          {% set _num = step.number | default(loop.index) %}
+          {% if _is_cta %}
+            <div class="proc-card" style="background:var(--c-brand);border-color:transparent;">
+              <div class="proc-dot" aria-hidden="true" style="border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.15)"></div>
+              <div class="proc-card-ico" aria-hidden="true" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);">
+                <svg viewBox="0 0 24 24" style="stroke:#fff;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div class="proc-num" style="color:rgba(255,255,255,.6);">{{ _num }}</div>
+              <div class="proc-title" style="color:var(--c-onbrand);font-size:1.2rem;margin-bottom:.6rem;">{{ step.title | default('') }}</div>
+              <p class="proc-desc" style="color:rgba(255,255,255,.7);margin-bottom:1.6rem;">{{ step.description | default('') }}</p>
+              <a href="{{ step.ctaUrl | default('/contact') }}" class="rh-btn-primary flip-btn" style="background:var(--c-onbrand);color:var(--c-brand);box-shadow:none;font-size:.88rem;padding:.7rem 1.5rem;margin-top:auto;">
+                <span class="flip-3d"><span class="flip-face flip-face--a">{{ step.ctaLabel | default("Let's talk") }}</span><span class="flip-face flip-face--b">Get started</span></span>
+              </a>
+            </div>
+          {% else %}
+            <div class="proc-card">
+              <div class="proc-dot" aria-hidden="true"></div>
+              <div class="proc-card-ico" aria-hidden="true">
+                {% if _icon == 'users' %}
+                  <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                {% elseif _icon == 'pencil' %}
+                  <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                {% elseif _icon == 'play' %}
+                  <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                {% elseif _icon == 'chart' %}
+                  <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                {% elseif _icon == 'phone' %}
+                  <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                {% else %}
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                {% endif %}
+              </div>
+              <div class="proc-num">{{ _num }}</div>
+              <div class="proc-title">{{ step.title | default('') }}</div>
+              <p class="proc-desc">{{ step.description | default('') }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>

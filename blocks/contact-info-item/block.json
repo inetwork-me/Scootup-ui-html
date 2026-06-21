@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/contact-info-item",
+  "title": "Contact Info Item",
+  "category": "design",
+  "icon": "id-alt",
+  "description": "A contact detail row with an icon, label, value (optionally linked) and subtext.",
+  "keywords": [
+    "scootup",
+    "contact",
+    "info"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "value": {
+      "type": "string",
+      "default": ""
+    },
+    "subtext": {
+      "type": "string",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/contact-info-item/index.js",
+  "render": "file:./render.php"
+}

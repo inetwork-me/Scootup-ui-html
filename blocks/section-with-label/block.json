@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/section-with-label",
+  "title": "Section With Label",
+  "category": "design",
+  "icon": "editor-textcolor",
+  "description": "A labelled content section: eyebrow label, title and body copy.",
+  "keywords": [
+    "scootup",
+    "section",
+    "label"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "body": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/section-with-label/index.js",
+  "render": "file:./render.php"
+}

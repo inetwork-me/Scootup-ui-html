@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/platform-stack",
+  "title": "Platform Stack",
+  "category": "design",
+  "icon": "images-alt2",
+  "description": "A fanned stack of platform cards (Facebook, TikTok, Instagram, YouTube, brand).",
+  "keywords": [
+    "scootup",
+    "platform",
+    "stack"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Every Platform"
+    },
+    "heading": {
+      "type": "string",
+      "default": "One team. Every feed."
+    },
+    "body": {
+      "type": "string",
+      "default": "We don't just make videos — we make content that belongs. Every reel is crafted native to its platform, engineered for the algorithm, and built to connect with real people in real seconds."
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "Start creating reels"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "/contact"
+    },
+    "platforms": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Facebook Reels",
+          "icon": "facebook"
+        },
+        {
+          "name": "TikTok",
+          "icon": "tiktok"
+        },
+        {
+          "name": "Instagram Reels",
+          "icon": "instagram"
+        },
+        {
+          "name": "YouTube Shorts",
+          "icon": "youtube"
+        },
+        {
+          "name": "@yourbrand",
+          "icon": "scootup"
+        }
+      ]
+    }
+  },
+  "editorScript": "file:../../dist/blocks/platform-stack/index.js",
+  "render": "file:./render.php"
+}

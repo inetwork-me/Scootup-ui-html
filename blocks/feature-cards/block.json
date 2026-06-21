@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/feature-cards",
+  "title": "Feature Cards",
+  "category": "design",
+  "icon": "list-view",
+  "description": "A section heading plus a responsive grid of numbered value/feature cards.",
+  "keywords": [
+    "scootup",
+    "features",
+    "values",
+    "cards",
+    "grid"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "items": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "editorScript": "file:../../dist/blocks/feature-cards/index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/page-hero",
+  "title": "Page Hero",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "Generic interior-page hero with eyebrow, heading, lead, dual CTAs and optional image.",
+  "keywords": [
+    "scootup",
+    "hero",
+    "page",
+    "header"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "crumbs": {
+      "type": "array",
+      "default": []
+    },
+    "tag": {
+      "type": "string",
+      "default": "Growth Studio"
+    },
+    "heading": {
+      "type": "string",
+      "default": "We move brands up & to the right."
+    },
+    "lead": {
+      "type": "string",
+      "default": "Scoot Up is a full-service growth studio combining strategy, content, paid media and design into one integrated system."
+    },
+    "primaryLabel": {
+      "type": "string",
+      "default": "Start a Project"
+    },
+    "primaryUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "secondaryLabel": {
+      "type": "string",
+      "default": "See Our Work"
+    },
+    "secondaryUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/page-hero/index.js",
+  "render": "file:./render.php"
+}

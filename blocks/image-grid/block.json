@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/image-grid",
+  "title": "Image Grid",
+  "category": "design",
+  "icon": "grid-view",
+  "description": "A responsive grid of project images.",
+  "keywords": [
+    "scootup",
+    "gallery",
+    "images"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "Project Images"
+    },
+    "images": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "editorScript": "file:../../dist/blocks/image-grid/index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,121 @@
+{# scootup/contact-section — attrs: heading, intro, email, phone, location, instagram, linkedin, github, dribbble
+   cf7_contact_id is injected server-side in render.php from the page's _cf7_contact_id meta. #}
+
+{% set _email = email | default('hello@scootup.studio') %}
+{% set _phone = phone | default('+1 (555) 000-1234') %}
+{% set _location = location | default('San Francisco, CA') %}
+
+<section id="contact-form" class="pt-4 md:pt-6 pb-24 md:pb-36 px-5 md:px-10 overflow-hidden">
+  <div class="mx-auto max-w-[1400px]">
+
+    {# Section title #}
+    {% if heading | default('') or intro | default('') %}
+      <div class="mb-12 md:mb-16">
+        {% if heading | default('') %}
+          <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[0.92] text-[clamp(2.4rem,5vw,5rem)]">
+            {{ heading }}
+          </h2>
+        {% endif %}
+        {% if intro | default('') %}
+          <p data-reveal="up" style="--d:.12s" class="text-muted leading-relaxed text-base md:text-lg mt-5 max-w-xl">
+            {{ intro }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Grid: form left, info right #}
+    <div class="contact-grid grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-14 items-center">
+
+      {# LEFT: Contact Form 7 in card #}
+      <div class="contact-left">
+        <div class="form-card">
+          <div class="cf7-wrapper" role="region" aria-label="Contact form" aria-live="polite">
+            {% if cf7_contact_id | default('') %}
+              {{ function('do_shortcode', '[contact-form-7 id="' ~ cf7_contact_id ~ '" title="Contact"]') | raw }}
+            {% else %}
+              <p class="text-muted text-sm leading-relaxed">No contact form is linked to this page yet. Set the contact form id in the page settings.</p>
+            {% endif %}
+          </div>
+
+          {# Client-side success state (id targeted by the page's submit handler) #}
+          <div id="form-success" class="hidden rounded-[20px] border-2 border-brand p-8 text-center">
+            <div class="w-[52px] h-[52px] rounded-full bg-brand grid place-items-center mx-auto mb-4">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-onbrand" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 class="font-display font-extrabold text-2xl tracking-tight mb-2">Message sent!</h3>
+            <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">We'll review your project and get back to you within 24 hours. Check your inbox.</p>
+          </div>
+        </div>
+      </div>{# /left #}
+
+      {# RIGHT: Contact info #}
+      <div class="contact-right">
+        <div class="cinfo-block">
+
+          {# Phone #}
+          <div class="cinfo-item" data-reveal="up" style="--d:.05s">
+            <div class="cinfo-icon">
+              {% include 'partials/icon.twig' with { name: 'phone' } only %}
+            </div>
+            <div>
+              <div class="cinfo-label">Phone</div>
+              <div class="cinfo-value"><a href="tel:{{ _phone | replace({' ': '', '(': '', ')': '', '-': ''}) }}">{{ _phone }}</a></div>
+              <div class="cinfo-sub">Mon – Fri, 9am – 6pm</div>
+            </div>
+          </div>
+
+          {# Email #}
+          <div class="cinfo-item" data-reveal="up" style="--d:.1s">
+            <div class="cinfo-icon">
+              {% include 'partials/icon.twig' with { name: 'email' } only %}
+            </div>
+            <div>
+              <div class="cinfo-label">Email</div>
+              <div class="cinfo-value"><a href="mailto:{{ _email }}">{{ _email }}</a></div>
+              <button class="copy-btn flip-btn" id="copy-email-btn" data-copy-email="{{ _email }}" aria-label="Copy email address" data-flip>
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                Copy
+              </button>
+            </div>
+          </div>
+
+          {# Location #}
+          <div class="cinfo-item" data-reveal="up" style="--d:.15s">
+            <div class="cinfo-icon">
+              {% include 'partials/icon.twig' with { name: 'location' } only %}
+            </div>
+            <div>
+              <div class="cinfo-label">Location</div>
+              <div class="cinfo-value">{{ _location }}</div>
+              <div class="cinfo-sub">Remote worldwide</div>
+            </div>
+          </div>
+
+          {# Social #}
+          <div data-reveal="up" style="--d:.2s">
+            <p class="text-xs uppercase tracking-[.13em] text-muted mb-3 font-sans">Find us online</p>
+            <div class="social-row">
+              {% set _socials = [
+                { network: 'instagram', url: instagram | default(''), label: 'Instagram' },
+                { network: 'linkedin',  url: linkedin  | default(''), label: 'LinkedIn'  },
+                { network: 'github',    url: github    | default(''), label: 'GitHub'    },
+                { network: 'dribbble',  url: dribbble  | default(''), label: 'Dribbble'  }
+              ] %}
+              {% for s in _socials | default([]) %}
+                {% if s.url | default('') %}
+                  <a href="{{ s.url | default('#') }}" class="social-pill" aria-label="{{ s.label | default(s.network) | default('Social link') }}">
+                    {% include 'partials/icon.twig' with { name: s.network | default('') } only %}
+                    {{ s.label | default(s.network) | default('') }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>{# /right #}
+
+    </div>
+  </div>
+</section>

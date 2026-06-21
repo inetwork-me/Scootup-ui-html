@@ -1,0 +1,46 @@
+{# scootup/hero-rotator — full hero (#top): tag, rotating headline, lead, dual CTAs, stat strip.
+   Faithful to the mockup: one min-h-screen section with content distributed top→bottom. #}
+{% set words = rotatingWords | default(['brands','reels','websites','results','stories']) %}
+{% set words_str = words | join('|') %}
+{% set hero_stats = stats | default([
+  {'value':'90','suffix':'+','label':'brands worked with'},
+  {'value':'150','suffix':'+','label':'projects delivered'},
+  {'value':'6','suffix':'+','label':'years of experience'},
+  {'value':'4.9','label':'average review','isRating':true,'dec':'1'}
+]) %}
+<section id="top" class="relative min-h-[100svh] flex flex-col justify-between pt-28 md:pt-32 pb-8 px-5 md:px-10 overflow-hidden">
+  <div class="relative z-10 mx-auto max-w-[1600px] w-full grow flex flex-col justify-center">
+    <div data-reveal="tag" class="mb-6 md:mb-9">
+      <span class="hero-tag"><span class="hero-tag-text">{{ tagline | default('Service growth studio') }}</span></span>
+    </div>
+    <h1 data-reveal="words" data-reveal-delay="0.85" data-rotator-host data-rotator-seed="{{ words[0] | default('brands') }}" data-rotator-words="{{ words_str }}" class="font-display font-extrabold tracking-[-0.035em] leading-[0.92] text-[clamp(3rem,11.5vw,12rem)]">
+      {{ headingPrefix | default('We scoot brands') }}<br>{{ headingSuffix | default('up & to the right.') }}
+    </h1>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-[1600px] w-full flex flex-col lg:flex-row lg:items-end justify-between gap-8 pt-10">
+    <p data-reveal="up" style="--d:1.1s" class="max-w-md text-base md:text-lg text-muted leading-relaxed">
+      {{ lead | default('Marketing, design & development for teams that refuse to plateau. We blend strategy, story and sharp execution to move the numbers that matter.') }}
+    </p>
+    <div data-reveal="up" style="--d:1.2s" class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 w-full lg:w-auto">
+      <a href="{{ ctaUrl | default('#') }}" data-flip class="inline-flex items-center justify-center gap-2 rounded-full bg-brand text-onbrand font-semibold px-7 py-4 text-base hover:opacity-90">
+        {{ ctaLabel | default('Start a project') }}
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+      </a>
+      <a href="{{ secondaryUrl | default('#') }}" data-flip class="inline-flex items-center justify-center gap-2 rounded-full border border-line font-semibold px-7 py-4 text-base hover:border-ink transition-colors">
+        {{ secondaryLabel | default('See our work') }}
+      </a>
+    </div>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-[1600px] w-full mt-10 pt-7 border-t border-line">
+    <div class="stat-strip">
+      {% for s in hero_stats %}
+      <div class="stat" data-reveal="up" style="--d:{{ 1.25 + loop.index0 * 0.07 }}s">
+        <div class="stat-num font-display"><span data-count="{{ s.value }}"{% if s.dec %} data-dec="{{ s.dec }}"{% endif %}>{{ s.value }}</span>{% if s.isRating %}<svg class="ico sfx stat-star" aria-hidden="true"><use href="#i-star"></use></svg>{% else %}<span class="sfx">{{ s.suffix | default('+') }}</span>{% endif %}</div>
+        <div class="stat-label">{{ s.label | default('') }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

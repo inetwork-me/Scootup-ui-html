@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/services-accordion",
+  "title": "Services Accordion",
+  "category": "design",
+  "icon": "list-view",
+  "description": "Accordion of services with crossfading image panel.",
+  "keywords": [
+    "scootup",
+    "services",
+    "accordion"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "What we do"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Everything your brand needs, under one roof."
+    },
+    "services": {
+      "type": "array",
+      "default": []
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  },
+  "editorScript": "file:../../dist/blocks/services-accordion/index.js",
+  "render": "file:./render.php"
+}

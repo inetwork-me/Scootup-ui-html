@@ -1,0 +1,29 @@
+{% set _placeholder = theme.link ~ '/assets/images/placeholder.webp' %}
+{% set _src = imageUrl | default(_placeholder) %}
+<a href="{{ url | default('#') }}" class="proj-card" data-reveal="up">
+  <div class="proj-card-img">
+    <div class="proj-card-img-inner">
+      <picture>
+        <source srcset="{{ _src }}" type="image/webp">
+        <img
+          src="{{ _src }}"
+          alt="{{ imageAlt | default(title) | default('') }}"
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-full object-cover">
+      </picture>
+    </div>
+  </div>
+  <div class="proj-card-body">
+    <div class="proj-card-name">{{ title | default('') }}</div>
+    <p class="text-[.85rem] text-muted font-sans leading-[1.5]">{{ excerpt | default('') }}</p>
+    <div class="proj-card-meta">
+      <span class="proj-card-tag"></span>
+      <span class="proj-card-arrow" aria-hidden="true">
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+      </span>
+    </div>
+  </div>
+</a>

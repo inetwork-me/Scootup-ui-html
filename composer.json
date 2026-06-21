@@ -1,0 +1,14 @@
+{
+  "name": "scootup/theme",
+  "description": "Scootup WordPress theme — Timber 3.x + Twig + Tailwind.",
+  "type": "wordpress-theme",
+  "require": {
+    "php": ">=8.0",
+    "timber/timber": "^2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
+}

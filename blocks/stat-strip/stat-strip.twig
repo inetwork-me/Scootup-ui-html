@@ -1,0 +1,24 @@
+{# scootup/stat-strip — attrs: stats[] of {value, suffix, label, isRating} #}
+{% set stats = stats | default([
+  { value: '90',  suffix: '+', label: 'brands worked with' },
+  { value: '150', suffix: '+', label: 'projects delivered' },
+  { value: '6',   suffix: '+', label: 'years of experience' },
+  { value: '4.9', label: 'average review', isRating: true }
+]) %}
+<div class="mx-auto max-w-[1600px] w-full pt-7 border-t border-line">
+  <div class="stat-strip">
+    {% for stat in stats %}
+      <div class="stat" data-reveal="up" style="--d:{{ 0.1 + (loop.index0 * 0.07) }}s">
+        <div class="stat-num font-display">
+          <span data-count="{{ stat.value | default(0) }}"{% if stat.isRating | default(false) %} data-dec="1"{% endif %}>{{ stat.value | default(0) }}</span>
+          {% if stat.isRating | default(false) %}
+            <svg class="ico sfx stat-star" aria-hidden="true"><use href="#i-star"></use></svg>
+          {% else %}
+            <span class="sfx">{{ stat.suffix | default('+') }}</span>
+          {% endif %}
+        </div>
+        <div class="stat-label">{{ stat.label | default('') }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

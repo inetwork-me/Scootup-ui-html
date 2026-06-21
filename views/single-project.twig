@@ -1,0 +1,25 @@
+{% extends "base.twig" %}
+
+{# Block-based project single. The hero, meta bar, body, image grid and prev/next
+   are all editable Gutenberg blocks (scootup/project-hero, meta-bar, image-grid,
+   post-nav) seeded into post.content — edit them in the block editor like a page.
+   This stub only supplies the page chrome: header offset, reading container and
+   the breadcrumb (derived from the service taxonomy, so it stays automatic). #}
+
+{% block content %}
+{% set _service = post.terms('service') | first %}
+<main id="main" role="main" class="pt-36 md:pt-44 pb-16 px-5 md:px-10">
+  <div class="mx-auto max-w-[1600px]">
+
+    {% include 'partials/breadcrumb.twig' with { crumbs: [
+      { label: 'Home', url: site.url | default('/') },
+      { label: 'Our Work', url: site.url ~ '/work' },
+      { label: _service.name | default('Service'), url: _service.link | default(site.url ~ '/work') },
+      { label: post.title | default('Project') }
+    ] } only %}
+
+    {{ post.content }}
+
+  </div>
+</main>
+{% endblock %}

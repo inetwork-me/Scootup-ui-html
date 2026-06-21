@@ -1,0 +1,51 @@
+<!-- ============ NAV ============ -->
+<header data-nav class="fixed top-0 inset-x-0 z-[200] px-5 md:px-10 pt-3 sm:pt-4 pb-3 sm:pb-4" role="banner">
+  <div class="mx-auto max-w-[1600px] flex items-start justify-between gap-3">
+    <!-- left: logo, its own floating element -->
+    <a href="{{ site.url | default('#top') }}" class="nav-bar flex items-center gap-2.5 h-14 px-4 sm:px-5 rounded-full shrink-0" aria-label="{{ site.name | default('Scoot Up') }} home">
+      <picture>
+        <source srcset="{{ theme.link | default('') }}/assets/logo.webp" type="image/webp">
+        <img src="{{ theme.link | default('') }}/assets/logo.png" alt="{{ site.name | default('Scoot Up') }}" width="32" height="32" class="w-8 h-8" decoding="async">
+      </picture>
+      <span class="font-display font-extrabold text-lg tracking-tight">{{ site.name | default('Scoot Up') }}</span>
+    </a>
+
+    <!-- right: nav tabs + CTA + burger, its own floating element -->
+    <nav class="nav-right relative shrink-0" aria-label="Main navigation">
+      <div class="nav-bar flex items-center gap-1 sm:gap-1.5 h-14 pl-2 sm:pl-3 pr-2 rounded-full">
+        {# Bespoke nav (mockup parity): two highlight pills + Let's Talk CTA.
+           The full nav lives in the burger dropdown below. #}
+        <a href="{{ site.url | default('') }}/reels" class="nav-pill hidden sm:inline-flex" data-flip>Reels</a>
+        <a href="{{ site.url | default('') }}/work" class="nav-pill hidden sm:inline-flex" data-flip>Our Work</a>
+        <a href="{{ site.url | default('') }}/contact" class="cta-pill" data-flip>
+          Let's Talk
+          <svg class="ico" aria-hidden="true"><use href="#i-message"></use></svg>
+        </a>
+        <button data-menu-toggle class="menu-icon-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="su-menu">
+          <span class="mb-ico" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+
+      <!-- dropdown menu, anchored under the burger -->
+      <div data-menu id="su-menu" class="su-menu">
+        <div class="su-menu-inner">
+          <div class="su-menu-list">
+            <span class="su-menu-pill" aria-hidden="true"></span>
+            <a href="{{ site.url | default('') }}/" class="menu-link" data-flip data-active>Home</a>
+            <a href="{{ site.url | default('') }}/reels" class="menu-link" data-flip>Reels</a>
+            <a href="{{ site.url | default('') }}/work" class="menu-link" data-flip>Our Work</a>
+            <a href="{{ site.url | default('') }}/about" class="menu-link" data-flip>About</a>
+          </div>
+          <div class="su-menu-foot">
+            <span class="fl">Theme</span>
+            <div class="flex items-center gap-2" role="group" aria-label="Theme">
+              <button data-theme-dot="light" class="theme-dot bg-paper" type="button" aria-label="Light theme"></button>
+              <button data-theme-dot="dark" class="theme-dot bg-ink" type="button" aria-label="Dark theme"></button>
+              <button data-theme-dot="forest" class="theme-dot bg-brand" type="button" aria-label="Forest theme"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

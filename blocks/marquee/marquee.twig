@@ -1,0 +1,28 @@
+{# scootup/marquee — attrs: items[], reverse(bool), dur(string), label(string), bordered(bool), sectionId(string), accent(bool).
+   Default = #partners-style chip strip. accent=true = the orange "team-strip" variant (about.html). #}
+{% if accent | default(false) %}
+  {# Orange accent ticker (reels.html .reel-strip / .rs-item). Items sit directly
+     in .marquee and are duplicated once so translateX(-50%) loops seamlessly. #}
+  <div{% if sectionId | default('') %} id="{{ sectionId }}"{% endif %} class="team-strip overflow-hidden">
+    <div class="marquee-mask">
+      <div class="marquee{% if reverse | default(false) %} rev{% endif %}" style="--dur:{{ dur | default('26s') }}">
+        {% for pass in 1..2 %}
+          {% for item in items | default([]) %}<span class="rs-item"{% if pass > 1 %} aria-hidden="true"{% endif %}>{{ item | default('') }}<span class="rs-dot"></span></span>{% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% else %}
+  <section{% if sectionId | default('') %} id="{{ sectionId }}"{% endif %} class="py-14 md:py-20{% if bordered | default(false) %} border-y border-line{% endif %} overflow-hidden">
+    {% if label | default('') %}
+      <p data-reveal="fade" class="text-center font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-muted mb-10 px-5">
+        {{ label }}
+      </p>
+    {% endif %}
+    {% include 'partials/marquee.twig' with {
+      items: items | default([]),
+      reverse: reverse | default(false),
+      dur: dur | default('38s')
+    } only %}
+  </section>
+{% endif %}

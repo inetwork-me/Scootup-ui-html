@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/services-grid",
+  "title": "Services Grid",
+  "category": "design",
+  "icon": "grid-view",
+  "description": "Dynamic grid of service taxonomy terms with icon, tagline and project count.",
+  "keywords": [
+    "scootup",
+    "services",
+    "grid",
+    "taxonomy"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "What We Do"
+    },
+    "heading": {
+      "type": "string",
+      "default": "What we do"
+    },
+    "intro": {
+      "type": "string",
+      "default": ""
+    },
+    "count": {
+      "type": "number",
+      "default": 6
+    }
+  },
+  "editorScript": "file:../../dist/blocks/services-grid/index.js",
+  "render": "file:./render.php"
+}

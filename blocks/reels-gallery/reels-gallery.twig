@@ -1,0 +1,85 @@
+{# scootup/reels-gallery — DYNAMIC. Mirrors the rh hero vertical slider markup from views/page-reels.twig. #}
+{% set _placeholder = theme.link | default('') ~ '/assets/images/placeholder.webp' %}
+
+{# Fallback reel data mirrors the static mockup so the slider is never empty. #}
+{% set _fallback_reels = [
+  { src: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@pacerathletics' },
+  { src: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@saffronkitchen' },
+  { src: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@verdebotanicals' },
+  { src: 'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@halcyontravel' },
+  { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@lumenstudio' },
+  { src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@onsetfinance' },
+  { src: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@crestfashion' },
+  { src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80&auto=format&fm=webp&fit=crop', handle: '@morningmatter' }
+] %}
+
+<section class="rh-section">
+  <div class="rh-split">
+
+    <!-- LEFT: copy -->
+    <div class="rh-copy">
+      {% set _eyebrow = eyebrow | default('Social Reels') %}
+      {% if _eyebrow %}
+        <div data-reveal="tag">
+          <span class="hero-tag"><span class="hero-tag-text">{{ _eyebrow }}</span></span>
+        </div>
+      {% endif %}
+      <h2 class="rh-headline" data-reveal="words">
+        {{ heading | default('Content that stops the scroll.') }}
+      </h2>
+      {% set _subtitle = subtitle | default('Short-form video for Instagram, TikTok & YouTube Shorts — built with sharp hooks, fast cuts, and strategy baked in from frame one.') %}
+      {% if _subtitle %}
+        <p class="rh-sub" data-reveal="up" style="--d:.1s">{{ _subtitle }}</p>
+      {% endif %}
+      {% set _cta_label = cta_label | default('Start your reels') %}
+      {% set _cta_url = cta_url | default('/contact') %}
+      {% if _cta_label %}
+        <a href="{{ _cta_url }}" class="rh-btn-primary flip-btn" data-reveal="up" style="--d:.2s">
+          <span class="flip-3d">
+            <span class="flip-face flip-face--a">{{ _cta_label }} <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;"><path d="M7 17 17 7M8.6 7H17v8.4"/></svg></span>
+            <span class="flip-face flip-face--b">Let's talk <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;"><path d="M7 17 17 7M8.6 7H17v8.4"/></svg></span>
+          </span>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- RIGHT: vertical infinite slider (app.js clones + drives it) -->
+    <div class="rh-slider-col" id="rh-slider-col" aria-hidden="true">
+      <div class="rh-slider-track" id="rh-slider-track">
+        {% if reels | default([]) | length %}
+          {% for reel in reels %}
+            {% set _fb = _fallback_reels[loop.index0 % _fallback_reels|length].src %}
+            {% set _src = reel.src | default(_fb) | default(_placeholder) %}
+            {% set _handle = reel.handle | default('@scootup') %}
+            <article class="rh-card">
+              <picture>
+                <source srcset="{{ _src }}" type="image/webp">
+                <img
+                  src="{{ _src }}"
+                  alt="{{ reel.caption | default(reel.handle) | default('') }}"
+                  width="560" height="996"
+                  {% if loop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+              </picture>
+              <div class="rh-card-cap"><span class="rh-card-dot" aria-hidden="true"></span>{{ _handle }}</div>
+            </article>
+          {% endfor %}
+        {% else %}
+          {% for reel in _fallback_reels %}
+            <article class="rh-card">
+              <picture>
+                <source srcset="{{ reel.src }}" type="image/webp">
+                <img
+                  src="{{ reel.src }}"
+                  alt=""
+                  width="560" height="996"
+                  {% if loop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+              </picture>
+              <div class="rh-card-cap"><span class="rh-card-dot" aria-hidden="true"></span>{{ reel.handle }}</div>
+            </article>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+  </div><!-- /.rh-split -->
+</section>

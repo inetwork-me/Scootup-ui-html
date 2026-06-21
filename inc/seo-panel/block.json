@@ -1,0 +1,9 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/seo-panel",
+  "title": "SEO Panel",
+  "category": "theme",
+  "description": "Editor sidebar panel for SEO / AEO / GEO meta (not an inserter block).",
+  "editorScript": "file:./index.jsx"
+}

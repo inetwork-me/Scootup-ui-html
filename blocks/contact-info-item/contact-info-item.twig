@@ -1,0 +1,18 @@
+<div class="cinfo-item" data-reveal="up">
+  <div class="cinfo-icon">
+    {% include 'partials/icon.twig' with { name: icon | default('email') } only %}
+  </div>
+  <div>
+    <div class="cinfo-label">{{ label | default('') }}</div>
+    <div class="cinfo-value">
+      {% if url | default('') %}
+        <a href="{{ url }}">{{ value | default('') }}</a>
+      {% else %}
+        {{ value | default('') }}
+      {% endif %}
+    </div>
+    {% if subtext | default('') %}
+      <div class="cinfo-sub">{{ subtext }}</div>
+    {% endif %}
+  </div>
+</div>

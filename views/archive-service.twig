@@ -1,0 +1,89 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<main id="main" role="main">
+
+  {# ============ HERO ============ #}
+  <section class="pt-36 md:pt-44 pb-16 px-5 md:px-10">
+    <div class="mx-auto max-w-[1600px]">
+
+      {% include 'partials/breadcrumb.twig' with { crumbs: [
+        { label: 'Home', url: site.url | default('/') },
+        { label: 'Our Work', url: site.url ~ '/work' },
+        { label: term.name | default('Service') }
+      ] } only %}
+
+      {# back link — sprite has no left-arrow symbol, so the icon is inlined #}
+      <a href="{{ site.url }}/work" class="inline-flex items-center gap-2 text-sm text-muted hover:text-brand transition-colors mb-10 font-sans group">
+        <svg class="ico transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M10 7l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        All Services
+      </a>
+
+      <div data-reveal="tag" class="mb-6 md:mb-8">
+        <span class="hero-tag">{{ term.name | default('Service') }}</span>
+      </div>
+
+      <h1 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[0.92] text-[clamp(2.8rem,8vw,8rem)] mb-6">
+        {{ term.meta('_service_headline') | default(term.name) | default('') }}
+      </h1>
+
+      <p data-reveal="up" data-reveal-delay="0.2" class="text-muted text-[clamp(1rem,2vw,1.2rem)] max-w-xl leading-relaxed">
+        {{ term.meta('_service_tagline') | default(term.description) | default('') }}
+      </p>
+    </div>
+  </section>
+
+  {# ============ PROJECTS GRID ============ #}
+  <section class="pb-28 px-5 md:px-10">
+    <div class="mx-auto max-w-[1600px]">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+        {% set _work_fallbacks = [
+          'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fm=webp&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fm=webp&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fm=webp&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fm=webp&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fm=webp&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fm=webp&fit=crop&w=1000&q=80'
+        ] %}
+        {% for item in posts | default([]) %}
+          {% set _thumb = item.thumbnail %}
+          {% set _img_src = _thumb ? _thumb.src('large') : _work_fallbacks[loop.index0 % _work_fallbacks|length] %}
+          {# Role/year come from the project's scootup/meta-bar block (block-edited, no meta). #}
+          {% set _role = meta_bar_value(item.id, 'Service') | default(term.name) %}
+          {% set _year = meta_bar_value(item.id, 'Year') %}
+          <a href="{{ item.link | default('#') }}" class="proj-card" data-reveal="up" data-reveal-delay="{{ (loop.index0 * 0.05) | round(2) }}">
+            <div class="proj-card-img">
+              <div class="proj-card-img-inner">
+                <picture>
+                  <source srcset="{{ _img_src }}" type="image/webp">
+                  <img
+                    src="{{ _img_src }}"
+                    alt="{{ _thumb.alt | default(item.title) | default('') }}"
+                    width="{{ _thumb.width | default(800) }}"
+                    height="{{ _thumb.height | default(600) }}"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover">
+                </picture>
+              </div>
+            </div>
+            <div class="proj-card-body">
+              <div class="proj-card-name">{{ item.title | default('') }}</div>
+              <p class="text-[.85rem] text-muted font-sans leading-[1.5]">{{ item.preview.length(16).read_more('') | default(item.excerpt) | default('') }}</p>
+              <div class="proj-card-meta">
+                <span class="proj-card-tag">{{ _role }}{% if _year %} · {{ _year }}{% endif %}</span>
+                <span class="proj-card-arrow" aria-hidden="true">
+                  <svg class="ico" aria-hidden="true"><use href="#i-arrow-tr"></use></svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        {% else %}
+          <p class="text-muted">No projects in this service yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock %}

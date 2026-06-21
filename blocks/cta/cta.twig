@@ -1,0 +1,7 @@
+{# scootup/cta — attrs: heading, ctaLabel, ctaUrl, images[]. Delegates to the shared CTA partial. #}
+{% include 'partials/cta-parallax.twig' with {
+  heading: heading | default("Let's Get Work and Make Something Great."),
+  cta_label: ctaLabel | default("Let's collaborate"),
+  cta_url: ctaUrl | default('#'),
+  images: images | default([])
+} only %}

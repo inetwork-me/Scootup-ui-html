@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/process-timeline",
+  "title": "Process Timeline",
+  "category": "design",
+  "icon": "list-view",
+  "description": "Sticky horizontal process timeline with scroll-driven progress line.",
+  "keywords": [
+    "scootup",
+    "process",
+    "timeline",
+    "steps"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "steps": {
+      "type": "array",
+      "default": [
+        { "number": "01 / Brief", "icon": "users", "title": "Brand & Audience Brief", "description": "We learn your voice, audience and goals in a single onboarding call. No 40-page questionnaires." },
+        { "number": "02 / Script", "icon": "pencil", "title": "Script & Concept Approval", "description": "We write the hooks and outline every reel. You approve the direction before a single frame is edited." },
+        { "number": "03 / Edit", "icon": "play", "title": "Edit, Sound & Captions", "description": "Full post-production — b-roll, licensed music, animated captions and brand overlays, all dialled in." },
+        { "number": "04 / Deliver", "icon": "chart", "title": "Deliver, Post & Optimise", "description": "Ready-to-post files delivered. We review metrics after publishing and refine the next batch from day one." },
+        { "number": "05 / Start", "icon": "phone", "cta": true, "title": "Ready to start your first reel?", "description": "No long contracts, no guesswork. One call and we're building your content.", "ctaLabel": "Let's talk", "ctaUrl": "/contact" }
+      ]
+    }
+  },
+  "editorScript": "file:../../dist/blocks/process-timeline/index.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,10 @@
+<div class="meta-bar mb-14 md:mb-18" data-reveal="up">
+  {% for item in items | default([]) %}
+    {% if item.value | default('') %}
+      <div class="meta-item">
+        <div class="meta-label">{{ item.label | default('') }}</div>
+        <div class="meta-value">{{ item.value | default('') }}</div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

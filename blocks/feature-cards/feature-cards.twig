@@ -1,0 +1,25 @@
+<section class="py-24 md:py-32 px-5 md:px-10 bg-surface">
+  <div class="mx-auto max-w-[1600px]">
+
+    {% if heading | default('') %}
+      <div class="mb-14 md:mb-16">
+        <div data-reveal="tag" class="mb-6"><span class="hero-tag">How We Work</span></div>
+        <h2 data-reveal="words" class="font-display font-extrabold tracking-[-0.035em] leading-[.92] text-[clamp(2.4rem,5vw,5rem)]">
+          {{ heading | default('') | nl2br }}
+        </h2>
+      </div>
+    {% endif %}
+
+    <div class="feat-grid">
+      {% for item in items | default([]) %}
+        {% set _delay = (0.05 + loop.index0 * 0.07) | round(2) %}
+        <div class="feat-card" data-reveal="up" style="--d:{{ _delay }}s">
+          <div class="feat-num">{{ item.number | default('') }}</div>
+          <div class="feat-title">{{ item.title | default('') }}</div>
+          <p class="feat-desc">{{ item.description | default('') }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>

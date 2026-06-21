@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/reel-card",
+  "title": "Reel Card",
+  "category": "design",
+  "icon": "format-video",
+  "description": "A 9:16 vertical reel card with handle caption.",
+  "keywords": [
+    "scootup",
+    "reel",
+    "video"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "caption": {
+      "type": "string",
+      "default": ""
+    },
+    "handle": {
+      "type": "string",
+      "default": "@yourbrand"
+    },
+    "platform": {
+      "type": "string",
+      "default": "instagram"
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:../../dist/blocks/reel-card/index.js",
+  "render": "file:./render.php"
+}

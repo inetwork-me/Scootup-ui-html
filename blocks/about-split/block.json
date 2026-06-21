@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/about-split",
+  "title": "About Split",
+  "category": "design",
+  "icon": "columns",
+  "description": "About split: headline + image on the left, process steps on the right.",
+  "keywords": [
+    "scootup",
+    "about",
+    "process"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "About us"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Big-agency firepower, boutique obsession."
+    },
+    "body": {
+      "type": "string",
+      "default": ""
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": "The Scoot Up studio team"
+    },
+    "steps": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "editorScript": "file:../../dist/blocks/about-split/index.js",
+  "render": "file:./render.php"
+}

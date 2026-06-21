@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "scootup/cta",
+  "title": "CTA Parallax",
+  "category": "design",
+  "icon": "megaphone",
+  "description": "Brand-colored CTA band with headline, button and parallax image grid.",
+  "keywords": [
+    "scootup",
+    "cta",
+    "call to action",
+    "banner"
+  ],
+  "textdomain": "scootup",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Let's Get Work and Make Something Great."
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "Let's collaborate"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "images": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "editorScript": "file:../../dist/blocks/cta/index.js",
+  "render": "file:./render.php"
+}
